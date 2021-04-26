@@ -13,7 +13,7 @@ export const Footer = () => {
     <div
       css={css`
         ${shadow.surrounding};
-        background-color: ${lighten(0.05, theme.colors.background)};
+        background-color: ${lighten(0.04, theme.colors.background)};
         font-size: 0.8rem;
         padding: 1rem 2rem;
       `}

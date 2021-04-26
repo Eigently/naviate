@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { lighten } from "polished";
-import { ReactComponent as Plane } from "./assets/plane-solid.svg";
+import { ReactComponent as Plane } from "./assets/wings.svg";
 
 import { useAppSelector } from "../../../app/hooks";
 
@@ -14,11 +13,15 @@ import { ThemeToggleButton } from "../../theme/ThemeToggle";
 export const Header = () => {
   const theme = useAppSelector(selectThemeObject);
 
+  const menuItemPadding = css`
+    padding: 0rem 0.5rem;
+  `;
+
   return (
     <div
       css={css`
         color: white;
-        background-color: ${lighten(0.1, theme.colors.naviateDarkBlue)};
+        background-color: ${theme.colors.naviateDarkBlue};
         ${shadow.md}
         font-weight: bolder;
         font-size: 1.5rem;
@@ -41,16 +44,30 @@ export const Header = () => {
             ${container}
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-end;
           `}
         >
           <Plane
             css={css`
-              padding: 0rem 0.5rem;
-              height: 1.2rem;
+              padding-right: 1rem;
+              height: 2rem;
             `}
           />
-          Naviate
+          <div
+            css={css`
+              ${container}
+              display: flex;
+              flex-direction: row;
+              font-size: 1.2rem;
+              font-weight: lighter;
+              align-items: flex-end;
+            `}
+          >
+            <div css={menuItemPadding}>E6B</div>
+            <div css={menuItemPadding}>Performance</div>
+            <div css={menuItemPadding}>Plan</div>
+            <div css={menuItemPadding}>Notes</div>
+          </div>
         </div>
         <ThemeToggleButton />
       </div>

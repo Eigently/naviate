@@ -1,7 +1,7 @@
 export const brandColors = {
-  naviateDarkBlue: "#000746",
-  naviateLightBlue: "#00b7ff",
-  naviateRed: "#EA3546",
-  naviateOrange: "#F86624",
-  naviateYellow: "#F9C80E",
+  naviateDarkBlue: "#3a0ca3",
+  naviateLightBlue: "#6277ff",
+  naviateRed: "#c7001e",
+  naviateOrange: "#ff5200",
+  naviateYellow: "#ffcb00",
 };

@@ -4,7 +4,7 @@ import { ThemeObject } from "./themeObject";
 export const darkTheme: ThemeObject = {
   colors: {
     base: "#ffffff",
-    background: "#111111",
+    background: "#000",
     ...brandColors,
   },
 };
