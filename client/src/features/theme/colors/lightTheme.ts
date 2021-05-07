@@ -1,5 +1,5 @@
 import { brandColors } from "./brandColors";
-import { ThemeObject } from "./themeObject";
+import { ThemeObject } from "../interface";
 
 export const lightTheme: ThemeObject = {
   colors: {

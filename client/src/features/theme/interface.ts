@@ -1,3 +1,10 @@
+export type Theme = "Light" | "Dark";
+
+export interface ThemeState {
+  value: Theme;
+  object: ThemeObject;
+}
+
 export interface ThemeObject {
   colors: {
     // The base colors, elevate by lightening
