@@ -6,8 +6,8 @@ import { lighten } from "polished";
 import { Theme, ThemeObject } from "../interface";
 import { FunctionComponent } from "react";
 
-import { ReactComponent as Sun } from "../assets/sun-solid.svg";
-import { ReactComponent as Moon } from "../assets/moon-solid.svg";
+import { ReactComponent as Sun } from "../assets/tabler-icon-sun.svg";
+import { ReactComponent as Moon } from "../assets/tabler-icon-moon.svg";
 
 type ThemeToggleButtonProps = {
   /**
@@ -38,8 +38,8 @@ export const ThemeToggleButton: FunctionComponent<ThemeToggleButtonProps> = (
     position: absolute;
     transition: transform;
     transition-duration: 100ms;
-    height: 0.9rem;
-    width: 0.9rem;
+    height: 1rem;
+    width: 1rem;
     border-radius: 9999px;
     color: ${lighten(0.1, themeObject.colors.naviateDarkBlue)};
     fill: ${lighten(0.1, themeObject.colors.naviateDarkBlue)};
@@ -88,14 +88,14 @@ export const ThemeToggleButton: FunctionComponent<ThemeToggleButtonProps> = (
         {theme === "Dark" ? (
           <>
             <div css={[buttonIconStyle, translateX(0.25)]}>
-              <Moon />
+              <Moon css={[buttonIconStyle]} />
             </div>
             <div css={[buttonKnobStyle, translateX(1.25)]} />
           </>
         ) : (
           <>
-            <div css={[buttonIconStyle, translateX(1.35)]}>
-              <Sun />
+            <div css={[buttonIconStyle, translateX(1.3)]}>
+              <Sun css={[buttonIconStyle]} />
             </div>
             <div css={[buttonKnobStyle, translateX(0.25)]} />
           </>

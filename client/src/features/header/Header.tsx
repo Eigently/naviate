@@ -4,11 +4,16 @@ import { FC } from "react";
 
 import { container } from "../../style/container";
 import { shadow } from "../../style/shadow";
+import { NavItem } from "../navbar/navitem/NavItem";
 import { ThemeToggleButton } from "../theme/components/ThemeToggleButton";
 
 import { Theme, ThemeObject } from "../theme/interface";
 
-import { ReactComponent as Plane } from "./assets/wings.svg";
+import { ReactComponent as NaviateLogo } from "./assets/wings.svg";
+import { ReactComponent as E6B } from "./assets/tabler-icon-compass.svg";
+import { ReactComponent as Performance } from "./assets/tabler-icon-plane-departure.svg";
+import { ReactComponent as Plan } from "./assets/tabler-icon-calendar-time.svg";
+import { ReactComponent as Notes } from "./assets/tabler-icon-notes.svg";
 
 type HeaderProps = {
   theme: Theme;
@@ -19,19 +24,12 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = (props) => {
   const { theme, themeObject, handleToggleTheme } = props;
 
-  const menuItemPadding = css`
-    padding: 0rem 0.5rem;
-  `;
-
   return (
     <div
       css={css`
         color: white;
         background-color: ${themeObject.colors.naviateDarkBlue};
         ${shadow.md}
-        font-weight: bolder;
-        font-size: 1.5rem;
-        padding: 1rem 2rem;
       `}
     >
       <div
@@ -47,37 +45,37 @@ export const Header: FC<HeaderProps> = (props) => {
       >
         <div
           css={css`
-            ${container}
             display: flex;
             flex-direction: row;
-            align-items: flex-end;
+            align-items: center;
+            margin: 0rem 0.5rem;
           `}
         >
-          <Plane
+          <NaviateLogo
             css={css`
-              padding-right: 1rem;
               height: 2rem;
+              margin: 0rem 0.5rem;
             `}
           />
           <div
             css={css`
-              ${container}
               display: flex;
               flex-direction: row;
-              font-size: 1.2rem;
-              font-weight: lighter;
-              align-items: flex-end;
+              // font-size: 1.2rem;
             `}
           >
-            <div css={menuItemPadding}>E6B</div>
-            <div css={menuItemPadding}>Performance</div>
-            <div css={menuItemPadding}>Plan</div>
-            <div css={menuItemPadding}>Notes</div>
+            <NavItem active={true} item={<E6B />} themeObject={themeObject} />
+            <NavItem item={<Performance />} themeObject={themeObject} />
+            <NavItem item={<Plan />} themeObject={themeObject} />
+            <NavItem item={<Notes />} themeObject={themeObject} />
           </div>
         </div>
         <div
           css={css`
-            padding: 0rem 1rem;
+            display: flex;
+            flex-direction: row;
+            font-size: 1.2rem;
+            margin: 0rem 0.5rem;
           `}
         >
           <ThemeToggleButton
