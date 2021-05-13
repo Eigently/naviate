@@ -27,10 +27,22 @@ export const Footer: FC<FooterProps> = (props) => {
       <div
         css={css`
           ${container}
+          display: flex;
+          justify-content: space-between;
         `}
       >
-        Copyright &copy; {new Date().getFullYear()} Eigently. All rights
-        reserved.
+        <div>
+          Copyright &copy; {new Date().getFullYear()} Eigently. All rights
+          reserved.
+        </div>
+        <a
+          href={`https://gitlab.com/eigently/naviate-client/-/commit/${process.env.REACT_APP_GIT_SHA}`}
+          css={css`
+            font-family: monospace;
+          `}
+        >
+          Version: {process.env.REACT_APP_GIT_SHA || "dev"}
+        </a>
       </div>
     </div>
   );
