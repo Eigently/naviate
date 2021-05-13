@@ -28,7 +28,6 @@ export const calculateE6B = createAsyncThunk(
   }: calculateE6BPayload): Promise<E6BData> => {
     const E6BBackend = await import("naviate-e6b");
 
-    console.log("Payload: ", course, trueAirspeed, windDirection, windSpeed);
     const correction = E6BBackend.get_correction(
       course,
       trueAirspeed,
