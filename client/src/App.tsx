@@ -1,12 +1,11 @@
 import { GlobalStyles } from "twin.macro";
-
-import { PageContainer } from "./features/page/container/PageContainer";
+import { Routes } from "./app/routes";
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <PageContainer />
+      <Routes />
     </>
   );
 }

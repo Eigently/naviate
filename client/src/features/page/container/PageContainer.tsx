@@ -9,7 +9,7 @@ import { Page } from "../components/Page";
 import { HeaderContainer } from "../../header/HeaderContainer";
 import { Footer } from "../../footer/Footer";
 
-export const PageContainer: FC = () => {
+export const PageContainer: FC = ({ children }) => {
   const themeObject = useAppSelector(selectThemeObject);
 
   return (
@@ -17,6 +17,8 @@ export const PageContainer: FC = () => {
       themeObject={themeObject}
       HeaderContainer={<HeaderContainer />}
       FooterContainer={<Footer themeObject={themeObject} />}
-    />
+    >
+      {children}
+    </Page>
   );
 };

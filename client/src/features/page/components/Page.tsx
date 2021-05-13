@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { ThemeObject } from "../../theme/interface";
 
 type PageProps = {
-  HeaderContainer: React.ReactNode;
-  FooterContainer: React.ReactNode;
+  children: ReactNode;
+  HeaderContainer: ReactNode;
+  FooterContainer: ReactNode;
   themeObject: ThemeObject;
 };
 
 export const Page: FC<PageProps> = (props) => {
-  const { themeObject, HeaderContainer, FooterContainer } = props;
+  const { themeObject, HeaderContainer, FooterContainer, children } = props;
 
   return (
     <div
@@ -27,7 +28,9 @@ export const Page: FC<PageProps> = (props) => {
         css={css`
           flex-grow: 1;
         `}
-      />
+      >
+        {children}
+      </div>
       {FooterContainer}
     </div>
   );
