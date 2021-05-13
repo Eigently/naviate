@@ -45,10 +45,11 @@ export const FullPageLoading: FC = () => {
   );
 
   useEffect(() => {
-    setTimeout(
+    const timeout = setTimeout(
       () => setMessage(messages[Math.floor(Math.random() * messages.length)]),
       4000
     );
+    return () => clearTimeout(timeout);
   });
 
   return (

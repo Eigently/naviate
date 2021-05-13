@@ -5,7 +5,7 @@ import { FC } from "react";
 import { ThemeObject } from "../../theme/interface";
 import { container } from "../../../style/container";
 
-import * as e6b from "naviate-e6b";
+import { E6B } from "../../e6b/components/E6B";
 
 type HomeProps = {
   PageContainer: React.FC;
@@ -20,31 +20,11 @@ export const Home: FC<HomeProps> = ({ PageContainer, themeObject }) => {
           container,
           css`
             padding: 0.5rem 1rem;
+            margin-top: 0.5rem;
           `,
         ]}
       >
-        <h1
-          css={[
-            css`
-              font-size: 1.5rem;
-              font-weight: 300;
-            `,
-          ]}
-        >
-          E6B Calculator
-        </h1>
-        <button
-          css={[
-            css`
-              background-color: ${themeObject.colors.naviateDarkBlue};
-              padding: 1rem;
-              border-radius: 0.25rem;
-            `,
-          ]}
-          onClick={() => e6b.greet()}
-        >
-          WASM
-        </button>
+        <E6B themeObject={themeObject} />
       </div>
     </PageContainer>
   );

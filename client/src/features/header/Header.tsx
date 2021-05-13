@@ -75,7 +75,7 @@ export const Header: FC<HeaderProps> = (props) => {
             display: flex;
             flex-direction: row;
             font-size: 1.2rem;
-            margin: 0rem 0.5rem;
+            margin: 0rem 1rem;
           `}
         >
           <ThemeToggleButton
