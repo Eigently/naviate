@@ -37,7 +37,7 @@ export const calculateE6B = createAsyncThunk(
     );
 
     const { heading, groundSpeed, windCorrectionAngle } = correction;
-    // correction.free();
+    correction.free();
 
     return {
       course,
