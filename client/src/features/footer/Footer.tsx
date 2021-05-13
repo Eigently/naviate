@@ -36,7 +36,7 @@ export const Footer: FC<FooterProps> = (props) => {
           reserved.
         </div>
         <a
-          href={`https://gitlab.com/eigently/naviate-client/-/commit/${process.env.REACT_APP_GIT_SHA}`}
+          href={`https://github.com/eigently/naviate-client/commit/${process.env.REACT_APP_GIT_SHA}`}
           css={css`
             font-family: monospace;
           `}
