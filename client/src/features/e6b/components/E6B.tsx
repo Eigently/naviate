@@ -9,27 +9,45 @@ import { Form } from "./Form";
 import { Illustration } from "./Illustration";
 
 import { shadow } from "../../../style/shadow";
+import { E6BData } from "../interface";
 
 type E6BProps = {
   themeObject: ThemeObject;
+  correctionData: E6BData;
+  handleFormInput: (
+    course: number,
+    trueAirspeed: number,
+    windDirection: number,
+    windSpeed: number
+  ) => void;
 };
 
-export const E6B: FC<E6BProps> = ({ themeObject }) => {
+export const E6B: FC<E6BProps> = ({
+  themeObject,
+  correctionData,
+  handleFormInput,
+}) => {
   return (
     <div
       css={[
         css`
-          display: flex;
-          flex-direction: row;
-          align-content: stretch;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           background-color: ${lighten(0.05, themeObject.colors.background)};
           border-radius: 0.25rem;
+          align-items: stretch;
         `,
         shadow.lg,
       ]}
     >
-      <Form themeObject={themeObject} />
-      <Illustration themeObject={themeObject} />
+      <Form
+        themeObject={themeObject}
+        handleFormInput={handleFormInput}
+        correctionData={correctionData}
+      />
+      <Illustration themeObject={themeObject} correctionData={correctionData} />
     </div>
   );
 };
+
+export default E6B;

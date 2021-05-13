@@ -1,12 +1,17 @@
 use wasm_bindgen::prelude::*;
 
-use crate::math_utils;
+use crate::{math_utils, utils};
 
 #[wasm_bindgen]
 #[derive(Debug)]
 pub struct CorrectionData {
+    #[wasm_bindgen(js_name = "windCorrectionAngle")]
     pub wind_correction_angle: f64,
+
+    #[wasm_bindgen(js_name = "groundSpeed")]
     pub ground_speed: f64,
+
+    #[wasm_bindgen(js_name = "heading")]
     pub heading: f64,
 }
 
@@ -48,6 +53,8 @@ pub fn get_correction(
     wind_direction_degrees: f64,
     wind_speed: f64,
 ) -> CorrectionData {
+    utils::set_panic_hook();
+
     let course = math_utils::to_radians(course_degrees);
     let wind_direction = math_utils::to_radians(wind_direction_degrees);
 

@@ -5,4 +5,5 @@ export interface E6BData {
   windSpeed: number;
   heading: number;
   groundSpeed: number;
+  windCorrectionAngle: number;
 }

@@ -5,7 +5,7 @@ import { FC } from "react";
 import { ThemeObject } from "../../theme/interface";
 import { container } from "../../../style/container";
 
-import { E6B } from "../../e6b/components/E6B";
+import { E6BContainer } from "../../e6b/container/E6BContainer";
 
 type HomeProps = {
   PageContainer: React.FC;
@@ -24,7 +24,7 @@ export const Home: FC<HomeProps> = ({ PageContainer, themeObject }) => {
           `,
         ]}
       >
-        <E6B themeObject={themeObject} />
+        <E6BContainer />
       </div>
     </PageContainer>
   );

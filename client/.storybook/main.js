@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
@@ -6,7 +8,7 @@ module.exports = {
     "@storybook/addon-actions",
     "@storybook/preset-create-react-app",
   ],
-  webPackFinal: async (config, { configType }) => {
+  webpackFinal: (config, { configType }) => {
     const wasmExtensionRegExp = /\.wasm$/;
 
     config.resolve.extensions.push(".wasm");

@@ -1,25 +1,37 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { FC } from "react";
-import { lighten, readableColor } from "polished";
+import { lighten, mix, readableColor } from "polished";
 import { useFormik } from "formik";
 
 import * as Yup from "yup";
-import * as E6BBackend from "naviate-e6b";
 
 import { ThemeObject } from "../../theme/interface";
 
+import { E6BData } from "../interface";
+
 type FormProps = {
   themeObject: ThemeObject;
+  handleFormInput: (
+    course: number,
+    trueAirspeed: number,
+    windDirection: number,
+    windSpeed: number
+  ) => void;
+  correctionData: E6BData;
 };
 
-export const Form: FC<FormProps> = ({ themeObject }) => {
+export const Form: FC<FormProps> = ({
+  themeObject,
+  handleFormInput,
+  correctionData,
+}) => {
   const formik = useFormik({
     initialValues: {
-      course: "",
-      trueAirspeed: "",
-      windDirection: "",
-      windSpeed: "",
+      course: correctionData.course,
+      trueAirspeed: correctionData.trueAirspeed,
+      windDirection: correctionData.windDirection,
+      windSpeed: correctionData.windSpeed,
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -34,10 +46,7 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
         .required("Required.")
         .max(360, "At most 360°.")
         .min(0, "At least 0°."),
-      windSpeed: Yup.number()
-        .required("Required.")
-        .max(360, "At most 360°.")
-        .min(0, "At least 0°."),
+      windSpeed: Yup.number().required("Required.").min(0, "At least 0."),
     }),
   });
 
@@ -69,13 +78,31 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
     `,
   ];
 
-  const formInputStyle = [
+  const dataEntryStyle = [
     css`
       border-radius: 0.25rem;
+      border: solid 0.2rem
+        ${mix(0.8, themeObject.colors.background, themeObject.colors.base)};
       color: ${readableColor(themeObject.colors.background)};
       padding: 0.25rem 0.5rem;
+    `,
+  ];
+
+  const calculatedStyle = [
+    dataEntryStyle,
+    css`
+      background-color: ${mix(
+        0.9,
+        themeObject.colors.background,
+        themeObject.colors.base
+      )};
+    `,
+  ];
+
+  const formInputStyle = [
+    dataEntryStyle,
+    css`
       background-color: ${lighten(0.02, themeObject.colors.background)};
-      border: solid 0.2rem ${lighten(0.02, themeObject.colors.background)};
     `,
   ];
 
@@ -88,13 +115,7 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
 
   if (Object.keys(formik.errors).length === 0) {
     const { course, trueAirspeed, windDirection, windSpeed } = formik.values;
-    const res = E6BBackend.get_correction(
-      parseFloat(course),
-      parseFloat(trueAirspeed),
-      parseFloat(windDirection),
-      parseFloat(windSpeed)
-    );
-    console.log("Correction: ", res);
+    handleFormInput(course, trueAirspeed, windDirection, windSpeed);
   }
 
   return (
@@ -103,9 +124,9 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
       css={[
         css`
           display: flex;
+          grid-column: span 1 / span 1;
           flex-direction: column;
           flex-grow: 1;
-          max-width: 25rem;
           background-color: ${lighten(0.08, themeObject.colors.background)};
           padding: 1rem;
           border-radius: 0.2rem 0rem 0rem 0.2rem;
@@ -117,6 +138,7 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
           css`
             font-size: 1.5rem;
             font-weight: 300;
+            color: ${themeObject.colors.base};
           `,
         ]}
       >
@@ -139,6 +161,8 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
         onChange={formik.handleChange}
         value={formik.values.course}
         onBlur={formik.handleBlur}
+        min={0}
+        max={360}
         css={[
           formInputStyle,
           formik.touched.course &&
@@ -163,6 +187,7 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
         onChange={formik.handleChange}
         value={formik.values.trueAirspeed}
         onBlur={formik.handleBlur}
+        min={0}
         css={[
           formInputStyle,
           formik.touched.trueAirspeed &&
@@ -187,6 +212,8 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
         onChange={formik.handleChange}
         value={formik.values.windDirection}
         onBlur={formik.handleBlur}
+        min={0}
+        max={360}
         css={[
           formInputStyle,
           formik.touched.windDirection &&
@@ -212,12 +239,46 @@ export const Form: FC<FormProps> = ({ themeObject }) => {
         onChange={formik.handleChange}
         value={formik.values.windSpeed}
         onBlur={formik.handleBlur}
+        min={0}
         css={[
           formInputStyle,
           formik.touched.windSpeed &&
             formik.errors.windSpeed &&
             formInputWarningStyle,
         ]}
+      />
+      <div css={[labelWarningStyle]}>
+        <label htmlFor="heading" css={[labelStyle]}>
+          Heading
+        </label>
+      </div>
+      <input
+        value={Math.round(correctionData.heading)}
+        css={[calculatedStyle]}
+        readOnly={true}
+      />
+      <div css={[labelWarningStyle]}>
+        <label htmlFor="groundSpeed" css={[labelStyle]}>
+          Ground Speed
+        </label>
+      </div>
+      <input
+        value={Math.round(correctionData.groundSpeed)}
+        css={[calculatedStyle]}
+        readOnly={true}
+      />
+      <div css={[labelWarningStyle]}>
+        <label htmlFor="windCorrectionAngle" css={[labelStyle]}>
+          Wind Correction Angle
+        </label>
+      </div>
+      <input
+        value={
+          (correctionData.windCorrectionAngle <= 0 ? "" : "+") +
+          Math.round(correctionData.windCorrectionAngle)
+        }
+        css={[calculatedStyle]}
+        readOnly={true}
       />
     </form>
   );
