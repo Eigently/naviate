@@ -10,6 +10,7 @@ import { Illustration } from "./Illustration";
 
 import { shadow } from "../../../style/shadow";
 import { E6BData } from "../interface";
+import { mq } from "../../../style/breakpoints";
 
 type E6BProps = {
   themeObject: ThemeObject;
@@ -32,7 +33,10 @@ export const E6B: FC<E6BProps> = ({
       css={[
         css`
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+          ${mq.md} {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
           background-color: ${lighten(0.05, themeObject.colors.background)};
           border-radius: 0.25rem;
           align-items: stretch;

@@ -9,6 +9,7 @@ import { Text } from "@visx/text";
 
 import { ThemeObject } from "../../theme/interface";
 import { E6BData } from "../interface";
+import { mq } from "../../../style/breakpoints";
 
 type IllustrationProps = {
   themeObject: ThemeObject;
@@ -138,16 +139,22 @@ export const Illustration: FC<IllustrationProps> = ({
   return (
     <div
       css={css`
-        grid-column: span 2 / span 2;
+        grid-column: span 1 / span 1;
+        ${mq.md} {
+          grid-column: span 2 / span 2;
+        }
         display: flex;
         justify-content: center;
+        align-items: stretch;
         margin: 1rem;
+        min-height: 200px;
       `}
     >
       <svg
         viewBox="0 0 100 100"
         css={css`
           max-width: 500px;
+          flex-grow: 1;
         `}
       >
         <g>
@@ -232,14 +239,14 @@ export const Illustration: FC<IllustrationProps> = ({
         </g>
         <g>
           <Circle
-            cx="0.1rem"
-            cy="0.1rem"
-            r="0.1rem"
+            cx={2}
+            cy={1}
+            r={1.5}
             fill={themeObject.colors.naviateOrange}
           />
           <Text
-            x="0.3rem"
-            y="0.1rem"
+            x={5}
+            y={1}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -252,8 +259,8 @@ export const Illustration: FC<IllustrationProps> = ({
             {`Wind: ${windDirection} @ ${windSpeed}`}
           </Text>
           <Text
-            x="0.3rem"
-            y="0.4rem"
+            x={5}
+            y={6}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -267,15 +274,10 @@ export const Illustration: FC<IllustrationProps> = ({
               windCorrectionAngle
             )}°`}
           </Text>
-          <Circle
-            cx="4.5rem"
-            cy="0.1rem"
-            r="0.1rem"
-            fill={themeObject.colors.naviateRed}
-          />
+          <Circle cx={70} cy={1} r={1.5} fill={themeObject.colors.naviateRed} />
           <Text
-            x="4.7rem"
-            y="0.1rem"
+            x={73}
+            y={1}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -288,14 +290,14 @@ export const Illustration: FC<IllustrationProps> = ({
             {`Course: ${course}°`}
           </Text>
           <Circle
-            cx="4.5rem"
-            cy="0.4rem"
-            r="0.1rem"
+            cx={70}
+            cy={6}
+            r={1.5}
             fill={themeObject.colors.naviateDarkBlue}
           />
           <Text
-            x="4.7rem"
-            y="0.4rem"
+            x={73}
+            y={6}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -307,15 +309,10 @@ export const Illustration: FC<IllustrationProps> = ({
           >
             {`Heading: ${Math.round(heading)}°`}
           </Text>
-          <Circle
-            cx="0.1rem"
-            cy="5.5rem"
-            r="0.1rem"
-            fill={themeObject.colors.naviateRed}
-          />
+          <Circle cx={2} cy={90} r={1.5} fill={themeObject.colors.naviateRed} />
           <Text
-            x="0.3rem"
-            y="5.5rem"
+            x={5}
+            y={90}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -328,14 +325,14 @@ export const Illustration: FC<IllustrationProps> = ({
             {`GS: ${Math.round(groundSpeed)}`}
           </Text>
           <Circle
-            cx="0.1rem"
-            cy="5.8rem"
-            r="0.1rem"
+            cx={2}
+            cy={95}
+            r={1.5}
             fill={themeObject.colors.naviateDarkBlue}
           />
           <Text
-            x="0.3rem"
-            y="5.8rem"
+            x={5}
+            y={95}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;

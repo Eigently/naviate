@@ -112,9 +112,12 @@ export const Form: FC<FormProps> = ({
       border: solid 0.2rem ${themeObject.colors.naviateRed};
     `,
   ];
-  
-  Object.keys(formik.values).forEach(key => {
-    if ((key === "course" || key === "windDirection") && (formik.values[key] >= 360 || formik.values[key] <= 0)) {
+
+  Object.keys(formik.values).forEach((key) => {
+    if (
+      (key === "course" || key === "windDirection") &&
+      (formik.values[key] >= 360 || formik.values[key] <= 0)
+    ) {
       formik.values[key] = ((formik.values[key] + 359) % 360) + 1;
     }
   });
