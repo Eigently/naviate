@@ -5,6 +5,7 @@ import { FC } from "react";
 import { mix } from "polished";
 import { Circle, Line } from "@visx/shape";
 import { MarkerArrow } from "@visx/marker";
+import { Text } from "@visx/text";
 
 import { ThemeObject } from "../../theme/interface";
 import { E6BData } from "../interface";
@@ -23,6 +24,7 @@ export const Illustration: FC<IllustrationProps> = ({
     trueAirspeed,
     heading,
     groundSpeed,
+    windCorrectionAngle,
   },
 }) => {
   const faintColor = mix(
@@ -139,6 +141,7 @@ export const Illustration: FC<IllustrationProps> = ({
         grid-column: span 2 / span 2;
         display: flex;
         justify-content: center;
+        margin: 1rem;
       `}
     >
       <svg
@@ -166,54 +169,58 @@ export const Illustration: FC<IllustrationProps> = ({
             stroke={faintColor}
           />
           {/* <line x1={50} y1={10} x2={50} y2={90} stroke={faintColor} /> */}
-          <text
+          <Text
             x={50}
-            y={8}
+            y={9}
             css={css`
               font-size: 0.4rem;
               font-family: monospace;
               fill: ${themeObject.colors.base};
             `}
             textAnchor="middle"
+            verticalAnchor="end"
           >
             N
-          </text>
-          <text
+          </Text>
+          <Text
             x={50}
-            y={96}
+            y={91}
             css={css`
               font-size: 0.4rem;
               font-family: monospace;
               fill: ${themeObject.colors.base};
             `}
             textAnchor="middle"
+            verticalAnchor="start"
           >
             S
-          </text>
-          <text
-            x={6}
-            y={52}
+          </Text>
+          <Text
+            x={9}
+            y={50}
             css={css`
               font-size: 0.4rem;
               font-family: monospace;
               fill: ${themeObject.colors.base};
             `}
-            textAnchor="middle"
+            textAnchor="end"
+            verticalAnchor="middle"
           >
             W
-          </text>
-          <text
-            x={94}
-            y={52}
+          </Text>
+          <Text
+            x={91}
+            y={50}
             css={css`
               font-size: 0.4rem;
               font-family: monospace;
               fill: ${themeObject.colors.base};
             `}
-            textAnchor="middle"
+            textAnchor="start"
+            verticalAnchor="middle"
           >
             E
-          </text>
+          </Text>
         </g>
         <g>
           <WindArrow />
@@ -222,6 +229,124 @@ export const Illustration: FC<IllustrationProps> = ({
         </g>
         <g>
           <Circle cx={50} cy={50} r={1} fill={themeObject.colors.base} />
+        </g>
+        <g>
+          <Circle
+            cx="0.1rem"
+            cy="0.1rem"
+            r="0.1rem"
+            fill={themeObject.colors.naviateOrange}
+          />
+          <Text
+            x="0.3rem"
+            y="0.1rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`Wind: ${windDirection} @ ${windSpeed}`}
+          </Text>
+          <Text
+            x="0.3rem"
+            y="0.4rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`WCA: ${windCorrectionAngle <= 0 ? "" : "+"}${Math.round(
+              windCorrectionAngle
+            )}`}
+          </Text>
+          <Circle
+            cx="4.6rem"
+            cy="0.1rem"
+            r="0.1rem"
+            fill={themeObject.colors.naviateRed}
+          />
+          <Text
+            x="4.8rem"
+            y="0.1rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`Course: ${course}`}
+          </Text>
+          <Circle
+            cx="4.6rem"
+            cy="0.4rem"
+            r="0.1rem"
+            fill={themeObject.colors.naviateDarkBlue}
+          />
+          <Text
+            x="4.8rem"
+            y="0.4rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`Heading: ${heading}`}
+          </Text>
+          <Circle
+            cx="0.1rem"
+            cy="5.5rem"
+            r="0.1rem"
+            fill={themeObject.colors.naviateRed}
+          />
+          <Text
+            x="0.3rem"
+            y="5.5rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`GS: ${Math.round(groundSpeed)}`}
+          </Text>
+          <Circle
+            cx="0.1rem"
+            cy="5.8rem"
+            r="0.1rem"
+            fill={themeObject.colors.naviateDarkBlue}
+          />
+          <Text
+            x="0.3rem"
+            y="5.8rem"
+            css={css`
+              font-size: 0.2rem;
+              font-family: monospace;
+              font-weight: bold;
+              fill: ${themeObject.colors.base};
+            `}
+            textAnchor="start"
+            verticalAnchor="middle"
+          >
+            {`TAS: ${trueAirspeed}`}
+          </Text>
         </g>
       </svg>
     </div>
