@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: docker build -t dokku/naviate-api:latest .
+      - name: Add SSH Key
+        run: |
+          mkdir -p /home/runner/.ssh
+          ssh-keyscan ${{ secrets.API_SERVER }} >> /home/runner/.ssh/known_hosts
+          echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null   
+          ssh-add /home/runner/.ssh/github_actions
+      - name: Upload Docker Image to Dokku
+        run: |
+          docker save dokku/naviate-api:latest | \
+            bzip2 | \
+            ssh root@${{ secrets.API_SERVER }} "bunzip2 | docker load"
+      - name: Deploy Docker Image
+        run: |
+          ssh root@$${{ secrets.API_SERVER }} \
+            "dokku tags:create naviate-api previous; dokku tags:deploy naviate-api latest"
