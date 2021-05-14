@@ -265,16 +265,16 @@ export const Illustration: FC<IllustrationProps> = ({
           >
             {`WCA: ${windCorrectionAngle <= 0 ? "" : "+"}${Math.round(
               windCorrectionAngle
-            )}`}
+            )}°`}
           </Text>
           <Circle
-            cx="4.6rem"
+            cx="4.5rem"
             cy="0.1rem"
             r="0.1rem"
             fill={themeObject.colors.naviateRed}
           />
           <Text
-            x="4.8rem"
+            x="4.7rem"
             y="0.1rem"
             css={css`
               font-size: 0.2rem;
@@ -285,16 +285,16 @@ export const Illustration: FC<IllustrationProps> = ({
             textAnchor="start"
             verticalAnchor="middle"
           >
-            {`Course: ${course}`}
+            {`Course: ${course}°`}
           </Text>
           <Circle
-            cx="4.6rem"
+            cx="4.5rem"
             cy="0.4rem"
             r="0.1rem"
             fill={themeObject.colors.naviateDarkBlue}
           />
           <Text
-            x="4.8rem"
+            x="4.7rem"
             y="0.4rem"
             css={css`
               font-size: 0.2rem;
@@ -305,7 +305,7 @@ export const Illustration: FC<IllustrationProps> = ({
             textAnchor="start"
             verticalAnchor="middle"
           >
-            {`Heading: ${heading}`}
+            {`Heading: ${Math.round(heading)}°`}
           </Text>
           <Circle
             cx="0.1rem"

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "[Naviate] Running build script..."
 
 echo "[Naviate] Installing Rust..."
@@ -8,4 +10,4 @@ echo "[Naviate] Installing native wasm packages..."
 cd native; ./scripts/build_requirements.sh; cd ..
 
 echo "[Naviate] Installing yarn packages"
-yarn install
+npm install

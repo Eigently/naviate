@@ -68,7 +68,8 @@ pub fn get_correction(
         wind_correction_angle,
     );
 
-    let heading = math_utils::to_degrees(wind_correction_angle + course);
+    let heading =
+        (math_utils::to_degrees(wind_correction_angle + course) + 359.0).round() % 360.0 + 1.0;
     let wind_correction_angle = math_utils::to_degrees(wind_correction_angle);
 
     CorrectionData {
