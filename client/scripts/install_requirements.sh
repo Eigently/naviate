@@ -10,4 +10,4 @@ echo "[Naviate] Installing native wasm packages..."
 cd native; ./scripts/build_requirements.sh; cd ..
 
 echo "[Naviate] Installing yarn packages"
-npm install
+yarn install
