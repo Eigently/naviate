@@ -113,15 +113,6 @@ export const Form: FC<FormProps> = ({
     `,
   ];
 
-  Object.keys(formik.values).forEach((key) => {
-    if (
-      (key === "course" || key === "windDirection") &&
-      (formik.values[key] >= 360 || formik.values[key] <= 0)
-    ) {
-      formik.values[key] = ((formik.values[key] + 359) % 360) + 1;
-    }
-  });
-
   if (Object.keys(formik.errors).length === 0) {
     const { course, trueAirspeed, windDirection, windSpeed } = formik.values;
     handleFormInput(course, trueAirspeed, windDirection, windSpeed);
@@ -170,6 +161,8 @@ export const Form: FC<FormProps> = ({
         onChange={formik.handleChange}
         value={formik.values.course}
         onBlur={formik.handleBlur}
+        min={0}
+        max={360}
         css={[
           formInputStyle,
           formik.touched.course &&
@@ -219,6 +212,8 @@ export const Form: FC<FormProps> = ({
         onChange={formik.handleChange}
         value={formik.values.windDirection}
         onBlur={formik.handleBlur}
+        min={0}
+        max={360}
         css={[
           formInputStyle,
           formik.touched.windDirection &&
@@ -244,6 +239,7 @@ export const Form: FC<FormProps> = ({
         onChange={formik.handleChange}
         value={formik.values.windSpeed}
         onBlur={formik.handleBlur}
+        min={0}
         css={[
           formInputStyle,
           formik.touched.windSpeed &&
