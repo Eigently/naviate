@@ -27,22 +27,28 @@ export const Footer: FC<FooterProps> = (props) => {
       <div
         css={css`
           ${container}
-          display: flex;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         `}
       >
         <div>
           Copyright &copy; {new Date().getFullYear()} Eigently. All rights
           reserved.
         </div>
-        <a
-          href={`https://github.com/eigently/naviate-client/commit/${process.env.REACT_APP_GIT_SHA}`}
+        <div
           css={css`
-            font-family: monospace;
+            text-align: right;
           `}
         >
-          Version: {process.env.REACT_APP_GIT_SHA || "dev"}
-        </a>
+          <a
+            href={`https://github.com/eigently/naviate-client/commit/${process.env.REACT_APP_GIT_SHA}`}
+            css={css`
+              font-family: monospace;
+            `}
+          >
+            Version: {process.env.REACT_APP_GIT_SHA || "dev"}
+          </a>
+        </div>
       </div>
     </div>
   );
