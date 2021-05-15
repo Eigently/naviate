@@ -1,6 +1,8 @@
 use actix_web::{get, middleware::Logger, post, web, App, HttpResponse, HttpServer, Responder};
 extern crate env_logger;
 
+mod datis;
+
 #[get("/")]
 async fn hello() -> impl Responder {
     HttpResponse::Ok().body("Hello world!")
@@ -24,6 +26,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .service(hello)
             .service(echo)
+            .service(web::scope("/datis/").configure(datis::config))
             .route("/hey", web::get().to(manual_hello))
     })
     .bind("0.0.0.0:8080")?
