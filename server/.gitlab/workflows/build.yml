@@ -1,0 +1,28 @@
+build musl binary:
+  image: rust:latest
+  stage: build
+  tags:
+    - rust-build
+  needs:
+    - unit test
+  before_script:
+    - apt-get update && apt-get install musl-dev musl-tools -y
+    - rustup target add x86_64-unknown-linux-musl
+  script:
+    - cargo build --release --verbose --target=x86_64-unknown-linux-musl
+  artifacts:
+    paths:
+      - target/
+
+build glibc binary:
+  image: rust:latest
+  stage: build
+  tags:
+    - rust-build
+  needs:
+    - unit test
+  script:
+    - cargo build --release --verbose
+  artifacts:
+    paths:
+      - target/
