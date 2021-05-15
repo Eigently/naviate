@@ -1,4 +1,4 @@
-use actix_web::{get, middleware::Logger, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, middleware::Logger, App, HttpResponse, HttpServer, Responder};
 extern crate env_logger;
 
 mod datis;
@@ -16,7 +16,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Logger::default())
             .service(health)
-            .configure(datis::config)
+            .configure(datis::routes::config)
     })
     .bind("0.0.0.0:8080")?
     .run()
