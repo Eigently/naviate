@@ -24,9 +24,8 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap(Logger::default())
+            .configure(datis::config)
             .service(hello)
-            .service(echo)
-            .service(web::scope("/datis/").configure(datis::config))
             .route("/hey", web::get().to(manual_hello))
     })
     .bind("0.0.0.0:8080")?

@@ -4,15 +4,14 @@ use actix_web::{
     web::{Path, ServiceConfig},
     HttpResponse, ResponseError,
 };
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 #[derive(Error, Debug)]
 enum HandleDatisError {
     #[error("Unknown Interal Error.")]
     UnknownError,
-    #[error("Invalid ICAO Code.")]
-    #[allow(dead_code)]
+    #[error("Invalid or Unsupported ICAO Code.")]
     InvalidICAOCode,
 }
 
@@ -51,13 +50,27 @@ struct ErrorResponse {
     message: String,
 }
 
-#[get("/{icao_code}")]
+#[derive(Serialize, Deserialize)]
+struct AirportData {
+    airport: String,
+    datis: String,
+}
+
+#[get("/datis/{icao_code}")]
 async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, HandleDatisError> {
-    let clowd_call = reqwest::blocking::get(format!("https://datis.clowd.io/api/{}", icao_code))
-        .map_err(|_| HandleDatisError::UnknownError)?
-        .text()
-        .map_err(|_| HandleDatisError::UnknownError)?;
-    Ok(HttpResponse::Ok().body(clowd_call))
+    let api_call_response =
+        reqwest::blocking::get(format!("https://datis.clowd.io/api/{}", icao_code))
+            .map_err(|_| HandleDatisError::UnknownError)?;
+
+    let airport_data_array = api_call_response
+        .json::<Vec<AirportData>>()
+        .map_err(|_| HandleDatisError::InvalidICAOCode)?;
+
+    let airport_data = airport_data_array
+        .get(0)
+        .ok_or(HandleDatisError::UnknownError)?;
+
+    Ok(HttpResponse::Ok().json(airport_data))
 }
 
 pub fn config(cfg: &mut ServiceConfig) {
