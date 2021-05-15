@@ -1,11 +1,5 @@
-FROM rust:alpine as build
-WORKDIR /build
-COPY . .
-RUN apk add musl-dev
-RUN cargo build --release
-
 FROM alpine:latest
 WORKDIR /app
-COPY --from=build /build/target/release/naviate-server ./
+COPY ./target/x86_64-unknown-linux-musl/release/naviate-server ./
 EXPOSE 8080
 CMD ["./naviate-server"]
