@@ -7,7 +7,7 @@ use actix_web::{
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::datis::service;
+use crate::d_atis::service;
 
 #[derive(Serialize)]
 struct ErrorResponse {
@@ -52,7 +52,7 @@ impl ResponseError for HandleDatisError {
     }
 }
 
-#[get("/datis/{icao_code}")]
+#[get("/d_atis/{icao_code}")]
 async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, HandleDatisError> {
     let response = service::get_d_atis(&icao_code).await;
 
