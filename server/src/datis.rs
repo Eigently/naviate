@@ -51,7 +51,7 @@ struct ErrorResponse {
     message: String,
 }
 
-#[get("/{icao_code}/")]
+#[get("/{icao_code}")]
 async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, HandleDatisError> {
     let clowd_call = reqwest::blocking::get(format!("https://datis.clowd.io/api/{}", icao_code))
         .map_err(|_| HandleDatisError::UnknownError)?
