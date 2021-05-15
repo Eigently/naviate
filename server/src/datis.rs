@@ -50,10 +50,20 @@ struct ErrorResponse {
     message: String,
 }
 
-#[derive(Serialize, Deserialize)]
-struct AirportData {
+#[derive(Deserialize)]
+struct ClowdResponse {
     airport: String,
     datis: String,
+    r#type: String,
+}
+
+#[derive(Serialize, Default)]
+struct HandleDatisResponse {
+    airport: String,
+    datis_type: String,
+    datis_combined: Option<String>,
+    datis_departure: Option<String>,
+    datis_arrival: Option<String>,
 }
 
 #[get("/datis/{icao_code}")]
@@ -63,14 +73,39 @@ async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, Han
             .map_err(|_| HandleDatisError::UnknownError)?;
 
     let airport_data_array = api_call_response
-        .json::<Vec<AirportData>>()
+        .json::<Vec<ClowdResponse>>()
         .map_err(|_| HandleDatisError::InvalidICAOCode)?;
 
     let airport_data = airport_data_array
         .get(0)
         .ok_or(HandleDatisError::UnknownError)?;
 
-    Ok(HttpResponse::Ok().json(airport_data))
+    if airport_data.r#type == "combined" {
+        return Ok(HttpResponse::Ok().json(HandleDatisResponse {
+            airport: airport_data.airport.to_owned(),
+            datis_type: "COMBINED".to_string(),
+            datis_combined: Some(airport_data.datis.to_owned()),
+            ..Default::default()
+        }));
+    }
+
+    let (mut datis_arrival, mut datis_departure) = (None, None);
+
+    for airport_data in &airport_data_array {
+        if airport_data.r#type.as_str() == "arr" {
+            datis_arrival = Some(airport_data.datis.clone());
+        } else {
+            datis_departure = Some(airport_data.datis.clone());
+        }
+    }
+
+    Ok(HttpResponse::Ok().json(HandleDatisResponse {
+        airport: airport_data.airport.to_owned(),
+        datis_type: "SEPARATED".to_string(),
+        datis_arrival,
+        datis_departure,
+        ..Default::default()
+    }))
 }
 
 pub fn config(cfg: &mut ServiceConfig) {
