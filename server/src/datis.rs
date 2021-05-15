@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 use actix_web::{
     get,
     http::StatusCode,
@@ -64,10 +66,13 @@ struct HandleDatisResponse {
     datis_combined: Option<String>,
     datis_departure: Option<String>,
     datis_arrival: Option<String>,
+    time: f64,
 }
 
 #[get("/datis/{icao_code}")]
 async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, HandleDatisError> {
+    let start = SystemTime::now();
+
     let api_call_response =
         reqwest::blocking::get(format!("https://datis.clowd.io/api/{}", icao_code))
             .map_err(|_| HandleDatisError::UnknownError)?;
@@ -95,6 +100,11 @@ async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, Han
             response.datis_departure = Some(airport_data.datis);
         }
     }
+
+    let response_duration = SystemTime::now()
+        .duration_since(start)
+        .map_err(|_| HandleDatisError::UnknownError)?;
+    response.time = response_duration.as_secs_f64();
 
     Ok(HttpResponse::Ok().json(response))
 }
