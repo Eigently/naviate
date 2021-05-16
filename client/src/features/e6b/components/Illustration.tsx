@@ -240,13 +240,13 @@ export const Illustration: FC<IllustrationProps> = ({
         <g>
           <Circle
             cx={2}
-            cy={1}
+            cy={2}
             r={1.5}
             fill={themeObject.colors.naviateOrange}
           />
           <Text
             x={5}
-            y={1}
+            y={2}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -260,7 +260,7 @@ export const Illustration: FC<IllustrationProps> = ({
           </Text>
           <Text
             x={5}
-            y={6}
+            y={7}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -274,10 +274,10 @@ export const Illustration: FC<IllustrationProps> = ({
               windCorrectionAngle
             )}°`}
           </Text>
-          <Circle cx={70} cy={1} r={1.5} fill={themeObject.colors.naviateRed} />
+          <Circle cx={70} cy={2} r={1.5} fill={themeObject.colors.naviateRed} />
           <Text
             x={73}
-            y={1}
+            y={2}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
@@ -291,13 +291,13 @@ export const Illustration: FC<IllustrationProps> = ({
           </Text>
           <Circle
             cx={70}
-            cy={6}
+            cy={7}
             r={1.5}
             fill={themeObject.colors.naviateDarkBlue}
           />
           <Text
             x={73}
-            y={6}
+            y={7}
             css={css`
               font-size: 0.2rem;
               font-family: monospace;
