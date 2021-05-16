@@ -1,44 +1,37 @@
 build and push dockerized musl:
   image: docker:19.03.12
   stage: share
+  needs:
+    - build musl binary
+  dependencies:
+    - build musl binary
+  artifacts:
+    paths:
+      - naviate.dockerimage
   tags:
     - docker
   services:
     - docker:19.03.12-dind
-  needs:
-    - build musl binary
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA
-  dependencies:
-    - build musl binary
+    - docker image tag $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA dokku/naviate-api:latest
+    - docker save -o naviate.dockerimage
 
 deploy dockerized musl:
   image: ubuntu:20.04
   stage: deploy
-  variables:
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-  tags:
-    - docker
   needs:
     - build and push dockerized musl
-  services:
-    - docker:19.03.12-dind
+  dependencies:
+    - build and push dockerized musl
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
       when: on_success
     - when: never
   before_script:
-    # Install Docker
-    - apt-get update && apt-get install -y curl
-    - curl -fsSL https://get.docker.com | sh -
-    # Get docker image from container registry
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA
-    - docker image tag $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA dokku/naviate-api:latest
     # Setup SSH keys
     - command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
@@ -47,5 +40,5 @@ deploy dockerized musl:
     - chmod 700 ~/.ssh
     - ssh-keyscan -t rsa $API_SERVER >> ~/.ssh/known_hosts
   script:
-    - docker save dokku/naviate-api:latest | bzip2 | ssh root@$API_SERVER "bunzip2 | docker load"
+    - cat naviate.dockerimage | bzip2 | ssh root@$API_SERVER "bunzip2 | docker load"
     - ssh root@$API_SERVER "dokku tags:create naviate-api previous; dokku tags:deploy naviate-api latest"
