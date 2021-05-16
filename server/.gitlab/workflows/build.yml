@@ -17,8 +17,6 @@ build musl binary:
 build glibc binary:
   image: rust:latest
   stage: build
-  tags:
-    - rust-build
   needs:
     - unit test
   script:
