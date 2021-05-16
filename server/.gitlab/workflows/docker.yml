@@ -18,7 +18,7 @@ build and push dockerized musl:
     - docker build -t $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA --build-arg COMMIT_SHA=$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA
     - docker image tag $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA dokku/naviate-api:latest
-    - docker save $CI_REGISTRY_IMAGE/alpine:$CI_COMMIT_SHORT_SHA -o naviate.dockerimage
+    - docker save dokku/naviate-api:latest -o naviate.dockerimage
 
 deploy dockerized musl:
   image: ubuntu:20.04
