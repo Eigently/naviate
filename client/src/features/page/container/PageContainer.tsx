@@ -7,7 +7,7 @@ import { selectThemeObject } from "../../theme/selectors/selectThemeObject";
 import { Page } from "../components/Page";
 
 import { HeaderContainer } from "../../header/HeaderContainer";
-import { Footer } from "../../footer/Footer";
+import { FooterContainer } from "../../footer/container/FooterContainer";
 
 export const PageContainer: FC = ({ children }) => {
   const themeObject = useAppSelector(selectThemeObject);
@@ -16,12 +16,7 @@ export const PageContainer: FC = ({ children }) => {
     <Page
       themeObject={themeObject}
       HeaderContainer={<HeaderContainer />}
-      FooterContainer={
-        <Footer
-          themeObject={themeObject}
-          clientVersion={process.env.REACT_APP_GIT_SHA || "dev"}
-        />
-      }
+      FooterContainer={<FooterContainer />}
     >
       {children}
     </Page>

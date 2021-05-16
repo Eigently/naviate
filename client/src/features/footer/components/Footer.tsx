@@ -3,11 +3,10 @@ import { FC } from "react";
 import { css } from "@emotion/react";
 import { lighten } from "polished";
 
-import { ThemeObject } from "../theme/interface";
+import { ThemeObject } from "../../theme/interface";
 
-import { container } from "../../style/container";
-import { shadow } from "../../style/shadow";
-import { versions } from "process";
+import { container } from "../../../style/container";
+import { shadow } from "../../../style/shadow";
 
 type FooterProps = {
   themeObject: ThemeObject;
@@ -68,7 +67,12 @@ export const Footer: FC<FooterProps> = (props) => {
           {serverVersion && (
             <>
               <div css={versionLabelStyle}>Server:</div>
-              <div css={versionStyle}>{serverVersion}</div>
+              <a
+                href={`https://github.com/eigently/naviate-server/commit/${serverVersion}`}
+                css={versionStyle}
+              >
+                {serverVersion}
+              </a>
             </>
           )}
         </div>

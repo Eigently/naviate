@@ -3,8 +3,8 @@ import { css } from "@emotion/react";
 import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
-import { lightTheme } from "../theme/colors/lightTheme";
-import { darkTheme } from "../theme/colors/darkTheme";
+import { lightTheme } from "../../theme/colors/lightTheme";
+import { darkTheme } from "../../theme/colors/darkTheme";
 
 import { Footer } from "./Footer";
 
