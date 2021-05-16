@@ -16,7 +16,12 @@ export const PageContainer: FC = ({ children }) => {
     <Page
       themeObject={themeObject}
       HeaderContainer={<HeaderContainer />}
-      FooterContainer={<Footer themeObject={themeObject} />}
+      FooterContainer={
+        <Footer
+          themeObject={themeObject}
+          clientVersion={process.env.REACT_APP_GIT_SHA || "dev"}
+        />
+      }
     >
       {children}
     </Page>
