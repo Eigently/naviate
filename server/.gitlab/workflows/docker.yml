@@ -18,6 +18,8 @@ build and push dockerized musl:
 deploy dockerized musl:
   image: ubuntu:20.04
   stage: deploy
+  variables:
+    DOCKER_HOST: tcp://docker:2376
   tags:
     - docker
   needs:
