@@ -9,7 +9,7 @@ build musl binary:
     - apt-get update && apt-get install musl-dev musl-tools -y
     - rustup target add x86_64-unknown-linux-musl
   script:
-    - cargo build --release --verbose --target=x86_64-unknown-linux-musl
+    - cargo build --release --target=x86_64-unknown-linux-musl
   artifacts:
     paths:
       - target/
@@ -22,7 +22,7 @@ build glibc binary:
   needs:
     - unit test
   script:
-    - cargo build --release --verbose
+    - cargo build --release
   artifacts:
     paths:
       - target/

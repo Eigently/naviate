@@ -2,4 +2,4 @@ unit test:
   image: rust:latest
   stage: test
   script:
-    - cargo test --verbose
+    - cargo test
