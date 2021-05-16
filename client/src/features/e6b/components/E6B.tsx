@@ -53,5 +53,3 @@ export const E6B: FC<E6BProps> = ({
     </div>
   );
 };
-
-export default E6B;

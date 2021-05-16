@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { ComponentProps, lazy } from "react";
+import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
 import { lightTheme } from "../../theme/colors/lightTheme";
@@ -8,7 +8,7 @@ import { darkTheme } from "../../theme/colors/darkTheme";
 
 import { initialState } from "../e6bSlice";
 
-const E6B = lazy(() => import("./E6B"));
+import { E6B } from "./E6B";
 
 export default {
   title: "features/e6b/E6B",
