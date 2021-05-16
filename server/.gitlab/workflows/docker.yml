@@ -1,9 +1,8 @@
 build and push dockerized musl:
   image: docker:19.03.12
   stage: share
-  variables:
-    DOCKER_HOST: tcp://localhost:2375
-    DOCKER_TLS_CERTDIR: ""
+  tags:
+    - docker
   services:
     - docker:19.03.12-dind
   needs:
@@ -19,9 +18,8 @@ build and push dockerized musl:
 deploy dockerized musl:
   image: ubuntu:20.04
   stage: deploy
-  variables:
-    DOCKER_HOST: tcp://localhost:2375
-    DOCKER_TLS_CERTDIR: ""
+  tags:
+    - docker
   needs:
     - build and push dockerized musl
   services:
