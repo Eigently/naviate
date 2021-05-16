@@ -46,8 +46,11 @@ export const Footer: FC<FooterProps> = (props) => {
         `}
       >
         <div>
-          Copyright &copy; {new Date().getFullYear()} Eigently. All rights
-          reserved.
+          <div>
+            Copyright &copy; {new Date().getFullYear()} Eigently. All rights
+            reserved.
+          </div>
+          <div>Do not use for real world flight navigation.</div>
         </div>
         <div
           css={css`
