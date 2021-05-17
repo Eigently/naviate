@@ -13,7 +13,7 @@ async fn health() -> impl Responder {
 async fn version() -> impl Responder {
     match std::env::var("COMMIT_SHA") {
         Ok(sha) => HttpResponse::Ok().body(sha),
-        Err(_) => HttpResponse::Ok().body("dev"),
+        Err(_) => HttpResponse::Ok().body("development"),
     }
 }
 
