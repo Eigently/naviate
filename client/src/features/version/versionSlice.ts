@@ -11,7 +11,6 @@ let initialState: VersionState = {
 export const getServerVersion = createAsyncThunk(
   "version/getServerVersion",
   async (): Promise<VersionAPIResponse> => {
-    console.log("Called getServerVersion...");
     const response = await fetch(`${API_URL}/version`);
 
     const version = await response.text();

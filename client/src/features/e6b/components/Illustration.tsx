@@ -39,9 +39,6 @@ export const Illustration: FC<IllustrationProps> = ({
 
   const convertToRadians = (aviationDegrees: number) => {
     const res = (((-aviationDegrees + 450) % 360) / 180) * Math.PI;
-    // console.log(
-    //   `${aviationDegrees} degrees is ${res} radians (${res / Math.PI}pi rads)`
-    // );
     return res;
   };
 
