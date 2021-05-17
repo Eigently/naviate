@@ -11,7 +11,7 @@ import { Footer } from "../components/Footer";
 export const FooterContainer: FC = () => {
   const themeObject = useAppSelector(selectThemeObject);
   const dispatch = useAppDispatch();
-  const clientVersionString = process.env.REACT_APP_GIT_SHA || "dev";
+  const clientVersionString = process.env.REACT_APP_GIT_SHA || "develop";
 
   const serverVersion = useAppSelector(selectServerVersion);
   if (serverVersion.status === "IDLE") {
@@ -26,8 +26,8 @@ export const FooterContainer: FC = () => {
   return (
     <Footer
       themeObject={themeObject}
-      clientVersion={clientVersionString}
-      serverVersion={serverVersionString}
+      clientVersion={clientVersionString.substr(0, 7)}
+      serverVersion={serverVersionString?.substr(0, 7)}
     />
   );
 };
