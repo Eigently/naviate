@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
@@ -5,6 +6,7 @@ import { lightTheme } from "../theme/colors/lightTheme";
 import { darkTheme } from "../theme/colors/darkTheme";
 
 import { Header } from "./Header";
+import { css } from "@emotion/react";
 
 export default {
   title: "features/header/Header",
@@ -15,7 +17,16 @@ export default {
 };
 
 const Template: Story<ComponentProps<typeof Header>> = (args) => (
-  <Header {...args} />
+  <div
+    css={[
+      css`
+        background-color: ${args.themeObject.colors.background};
+        padding: 3rem;
+      `,
+    ]}
+  >
+    <Header {...args} />
+  </div>
 );
 
 export const Primary = Template.bind({});
