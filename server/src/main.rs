@@ -24,7 +24,7 @@ fn get_cors() -> Cors {
                 .allow_any_origin()
                 .allow_any_header()
                 .allow_any_method(),
-            "production" => Cors::default(),
+            "production" => Cors::default().allowed_origin("https://www.naviate.xyz"),
             _ => Cors::default(),
         },
         _ => Cors::default(),
