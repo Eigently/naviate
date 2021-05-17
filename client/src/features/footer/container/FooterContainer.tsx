@@ -14,7 +14,13 @@ export const FooterContainer: FC = () => {
   const clientVersionString = process.env.REACT_APP_GIT_SHA || "develop";
 
   const serverVersion = useAppSelector(selectServerVersion);
-  if (serverVersion.status === "IDLE") {
+  const currentDate = Date.now();
+  const msToHour = 1000 * 60 * 60;
+  if (
+    serverVersion.status === "IDLE" ||
+    (serverVersion.lastUpdated &&
+      currentDate - serverVersion.lastUpdated >= msToHour)
+  ) {
     dispatch(getServerVersion());
   }
 

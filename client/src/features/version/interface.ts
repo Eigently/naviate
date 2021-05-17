@@ -4,6 +4,7 @@ export interface VersionAPIResponse {
   status: "IDLE" | "LOADING" | "SUCCEEDED" | "FAILED";
   error?: string;
   version?: string;
+  lastUpdated?: number;
 }
 
 export interface VersionState {

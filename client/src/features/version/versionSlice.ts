@@ -18,6 +18,7 @@ export const getServerVersion = createAsyncThunk(
     return {
       status: "SUCCEEDED",
       version,
+      lastUpdated: Date.now(),
     };
   }
 );
