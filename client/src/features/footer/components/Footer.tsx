@@ -8,6 +8,9 @@ import { ThemeObject } from "../../theme/interface";
 import { container } from "../../../style/container";
 import { shadow } from "../../../style/shadow";
 
+import { ReactComponent as Heart } from "../assets/tabler-icon-heart.svg";
+import { ReactComponent as Plane } from "../assets/tabler-icon-plane.svg";
+
 type FooterProps = {
   themeObject: ThemeObject;
   clientVersion: String;
@@ -46,8 +49,23 @@ export const Footer: FC<FooterProps> = (props) => {
       >
         <div>
           <div>
-            Copyright &copy; {new Date().getFullYear()} Eigently. All rights
-            reserved.
+            Made with
+            <Heart
+              css={css`
+                height: 0.8rem;
+                display: inline;
+                vertical-align: text-top;
+              `}
+            />
+            for
+            <Plane
+              css={css`
+                height: 0.8rem;
+                display: inline;
+                vertical-align: text-top;
+              `}
+            />
+            Simulation
           </div>
           <div>Do not use for real world flight navigation.</div>
         </div>
