@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { lighten, mix, readableColor } from "polished";
@@ -11,8 +12,8 @@ import { ThemeObject } from "../../theme/interface";
 import { E6BData } from "../interface";
 
 type FormProps = {
-  theme_object: ThemeObject;
-  correction_data: E6BData;
+  theme_object: t.TypeOf<typeof ThemeObject>;
+  correction_data: t.TypeOf<typeof E6BData>;
   handle_form_input: (
     course: number,
     true_airspeed: number,

@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { lighten } from "polished";
@@ -9,7 +10,7 @@ import { shadow } from "../../style/shadow";
 import { mq } from "../../style/breakpoints";
 
 type DAtisProps = {
-  theme_object: ThemeObject;
+  theme_object: t.TypeOf<typeof ThemeObject>;
 };
 
 export const DAtis: FC<DAtisProps> = ({ theme_object }) => {

@@ -1,7 +1,8 @@
+import * as t from "io-ts";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { E6BData } from "./interface";
 
-export const initial_state: E6BData = {
+export const initial_state: t.TypeOf<typeof E6BData> = {
   course: 320,
   true_airspeed: 100,
   wind_direction: 90,
@@ -25,7 +26,7 @@ export const calculate_e6b = createAsyncThunk(
     true_airspeed,
     wind_direction,
     wind_speed,
-  }: CalculateE6BPayload): Promise<E6BData> => {
+  }: CalculateE6BPayload): Promise<t.TypeOf<typeof E6BData>> => {
     const e6b_backend = await import("naviate-e6b");
 
     const correction = e6b_backend.get_correction(
@@ -46,7 +47,7 @@ export const calculate_e6b = createAsyncThunk(
       heading,
       ground_speed,
       wind_correction_angle,
-    } as E6BData;
+    } as t.TypeOf<typeof E6BData>;
   }
 );
 

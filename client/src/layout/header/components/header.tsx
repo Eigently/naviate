@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 
@@ -16,8 +17,8 @@ import { ReactComponent as Plan } from "../assets/tabler-icon-calendar-time.svg"
 import { ReactComponent as Notes } from "../assets/tabler-icon-notes.svg";
 
 type HeaderProps = {
-  theme: Theme;
-  theme_object: ThemeObject;
+  theme: t.TypeOf<typeof Theme>;
+  theme_object: t.TypeOf<typeof ThemeObject>;
   handle_toggle_theme: () => void;
 };
 

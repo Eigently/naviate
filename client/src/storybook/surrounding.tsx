@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC, ReactNode } from "react";
 import { ThemeObject } from "../theme/interface";
 
 type SurroundingProps = {
   args: {
-    theme_object: ThemeObject;
+    theme_object: t.TypeOf<typeof ThemeObject>;
   };
   children: ReactNode;
 };

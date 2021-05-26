@@ -23,7 +23,7 @@ const Template: Story<ComponentProps<typeof Header>> = (args) => (
 
 export const Light = Template.bind({});
 Light.args = {
-  theme: "Light",
+  theme: "light",
   theme_object: light_theme,
 };
 
@@ -32,6 +32,6 @@ Light.args = {
  */
 export const Dark = Template.bind({});
 Dark.args = {
-  theme: "Dark",
+  theme: "dark",
   theme_object: dark_theme,
 };

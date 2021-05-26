@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 import { lighten } from "polished";
@@ -13,8 +14,8 @@ import { E6BData } from "../interface";
 import { mq } from "../../style/breakpoints";
 
 type E6BProps = {
-  theme_object: ThemeObject;
-  correction_data: E6BData;
+  theme_object: t.TypeOf<typeof ThemeObject>;
+  correction_data: t.TypeOf<typeof E6BData>;
   handle_form_input: (
     course: number,
     true_airspeed: number,
@@ -28,22 +29,21 @@ export const E6B: FC<E6BProps> = ({
   correction_data,
   handle_form_input,
 }) => {
+  const styles = {
+    outer_grid: css`
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      ${mq.md} {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      background-color: ${lighten(0.05, theme_object.colors.background)};
+      border-radius: 0.25rem;
+      align-items: stretch;
+    `,
+  };
+
   return (
-    <div
-      css={[
-        css`
-          display: grid;
-          grid-template-columns: repeat(1, minmax(0, 1fr));
-          ${mq.md} {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
-          background-color: ${lighten(0.05, theme_object.colors.background)};
-          border-radius: 0.25rem;
-          align-items: stretch;
-        `,
-        shadow.lg,
-      ]}
-    >
+    <div css={[styles.outer_grid, shadow.lg]}>
       <E6BForm
         theme_object={theme_object}
         handle_form_input={handle_form_input}

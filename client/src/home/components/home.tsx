@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 
@@ -10,7 +11,7 @@ import { DAtisContainer } from "../../d_atis/container/d_atis_container";
 
 type HomeProps = {
   PageContainer: React.FC;
-  theme_object: ThemeObject;
+  theme_object: t.TypeOf<typeof ThemeObject>;
 };
 
 export const Home: FC<HomeProps> = ({ theme_object, PageContainer }) => {

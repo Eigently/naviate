@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { lighten } from "polished";
 import { FC, ReactNode } from "react";
@@ -8,7 +9,7 @@ import { ThemeObject } from "../../theme/interface";
 type NavItemProps = {
   active?: boolean;
   item: ReactNode;
-  theme_object: ThemeObject;
+  theme_object: t.TypeOf<typeof ThemeObject>;
 };
 
 export const NavItem: FC<NavItemProps> = ({

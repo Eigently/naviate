@@ -1,12 +1,12 @@
+import { RootState } from "../state/store";
+import { load_theme_state, save_theme_state } from "../theme/persist_theme";
+
 export const load_state = () => {
-  const serialized_state = localStorage.getItem("state");
-  if (serialized_state === null) {
-    return undefined;
-  }
-  return JSON.parse(serialized_state);
+  return {
+    theme: load_theme_state(),
+  };
 };
 
-export const save_state = (state: any): void => {
-  const serialized_state = JSON.stringify(state);
-  localStorage.setItem("state", serialized_state);
+export const save_state = (state: RootState): void => {
+  save_theme_state(state.theme);
 };

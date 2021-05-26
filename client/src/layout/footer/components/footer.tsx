@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { FC } from "react";
 import { css } from "@emotion/react";
 import { lighten } from "polished";
@@ -12,7 +13,7 @@ import { ReactComponent as Heart } from "../assets/tabler-icon-heart.svg";
 import { ReactComponent as Plane } from "../assets/tabler-icon-plane.svg";
 
 type FooterProps = {
-  theme_object: ThemeObject;
+  theme_object: t.TypeOf<typeof ThemeObject>;
   client_version: String;
   server_version?: String;
 };

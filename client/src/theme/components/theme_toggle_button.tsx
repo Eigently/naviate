@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 
 import { shadow } from "../../style/shadow";
@@ -13,12 +14,12 @@ type ThemeToggleButtonProps = {
   /**
    * The set of colors in the current theme.
    */
-  theme_object: ThemeObject;
+  theme_object: t.TypeOf<typeof ThemeObject>;
 
   /**
    * Whether the theme is light or dark.
    */
-  theme: Theme;
+  theme: t.TypeOf<typeof Theme>;
 
   /**
    * A callback that is called when the theme is toggled.
@@ -86,7 +87,7 @@ export const ThemeToggleButton: FunctionComponent<ThemeToggleButtonProps> = ({
         aria-label="Toggle Theme"
         onClick={() => handle_toggle_theme()}
       >
-        {theme === "Dark" ? (
+        {theme === "dark" ? (
           <>
             <div css={[styles.button_icon, styles.translate_x(0.25)]}>
               <Moon css={[styles.button_icon]} />

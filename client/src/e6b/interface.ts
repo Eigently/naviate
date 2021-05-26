@@ -1,9 +1,11 @@
-export interface E6BData {
-  course: number;
-  true_airspeed: number;
-  wind_direction: number;
-  wind_speed: number;
-  heading: number;
-  ground_speed: number;
-  wind_correction_angle: number;
-}
+import * as t from "io-ts";
+
+export const E6BData = t.type({
+  course: t.number,
+  true_airspeed: t.number,
+  wind_direction: t.number,
+  wind_speed: t.number,
+  heading: t.number,
+  ground_speed: t.number,
+  wind_correction_angle: t.number,
+});

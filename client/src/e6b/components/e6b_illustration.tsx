@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
 
@@ -12,8 +13,8 @@ import { E6BData } from "../interface";
 import { mq } from "../../style/breakpoints";
 
 type IllustrationProps = {
-  theme_object: ThemeObject;
-  correction_data: E6BData;
+  theme_object: t.TypeOf<typeof ThemeObject>;
+  correction_data: t.TypeOf<typeof E6BData>;
 };
 
 export const E6BIllustration: FC<IllustrationProps> = ({
