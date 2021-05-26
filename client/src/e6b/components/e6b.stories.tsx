@@ -12,7 +12,7 @@ import { E6B } from "./e6b";
 import { Surrounding } from "../../storybook/surrounding";
 
 export default {
-  title: "E6B",
+  title: "aviation/E6B",
   component: E6B,
   argTypes: {
     handle_form_input: { action: "handle_form_input" },

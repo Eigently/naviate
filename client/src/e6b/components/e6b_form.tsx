@@ -2,7 +2,7 @@
 import * as t from "io-ts";
 import { css } from "@emotion/react";
 import { FC } from "react";
-import { lighten, mix, readableColor } from "polished";
+import { lighten } from "polished";
 import { useFormik } from "formik";
 
 import * as Yup from "yup";
@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { ThemeObject } from "../../theme/interface";
 
 import { E6BData } from "../interface";
+import { FormTextInput } from "../../form/form_text_input";
 
 type FormProps = {
   theme_object: t.TypeOf<typeof ThemeObject>;
@@ -51,68 +52,17 @@ export const E6BForm: FC<FormProps> = ({
     }),
   });
 
-  const labelWarningStyle = [
-    css`
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+  const styles = {
+    form_grid_item: css`
+      grid-column: span 1 / span 1;
     `,
-  ];
-
-  const labelStyle = [
-    css`
-      margin-top: 0.75rem;
-      margin-bottom: 0.1rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: ${readableColor(theme_object.colors.background)};
+    form_flex: css`
+      display: grid;
+      grid-template-columns: 100%;
+      background-color: ${lighten(0.08, theme_object.colors.background)};
+      padding: 1rem;
     `,
-  ];
-
-  const warningStyle = [
-    css`
-      font-weight: 500;
-      font-size: 0.8rem;
-      margin-bottom: 0.1rem;
-      color: ${lighten(0.05, theme_object.colors.naviate_red)};
-    `,
-  ];
-
-  const dataEntryStyle = [
-    css`
-      border-radius: 0.25rem;
-      border: solid 0.2rem
-        ${mix(0.8, theme_object.colors.background, theme_object.colors.base)};
-      color: ${readableColor(theme_object.colors.background)};
-      padding: 0.25rem 0.5rem;
-    `,
-  ];
-
-  const calculatedStyle = [
-    dataEntryStyle,
-    css`
-      background-color: ${mix(
-        0.9,
-        theme_object.colors.background,
-        theme_object.colors.base
-      )};
-    `,
-  ];
-
-  const formInputStyle = [
-    dataEntryStyle,
-    css`
-      background-color: ${lighten(0.02, theme_object.colors.background)};
-    `,
-  ];
-
-  const formInputWarningStyle = [
-    css`
-      box-sizing: border-box;
-      border: solid 0.2rem ${theme_object.colors.naviate_red};
-    `,
-  ];
+  };
 
   if (Object.keys(formik.errors).length === 0) {
     const { course, true_airspeed, wind_direction, wind_speed } = formik.values;
@@ -122,17 +72,7 @@ export const E6BForm: FC<FormProps> = ({
   return (
     <form
       onSubmit={formik.handleSubmit}
-      css={[
-        css`
-          display: flex;
-          grid-column: span 1 / span 1;
-          flex-direction: column;
-          flex-grow: 1;
-          background-color: ${lighten(0.08, theme_object.colors.background)};
-          padding: 1rem;
-          border-radius: 0.2rem 0rem 0rem 0.2rem;
-        `,
-      ]}
+      css={[styles.form_grid_item, styles.form_flex]}
     >
       <h1
         css={[
@@ -145,141 +85,75 @@ export const E6BForm: FC<FormProps> = ({
       >
         E6B Calculator
       </h1>
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="course" css={[labelStyle]}>
-          Course
-        </label>
-        <div css={[warningStyle]}>
-          {formik.touched.course &&
-            formik.errors.course &&
-            formik.errors.course}
-        </div>
-      </div>
-      <input
+      <FormTextInput
         id="course"
-        name="course"
-        type="number"
+        label="Course"
+        theme_object={theme_object}
+        error={formik.touched.course && formik.errors.course}
+        onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         value={formik.values.course}
-        onBlur={formik.handleBlur}
-        min={0}
-        max={360}
-        css={[
-          formInputStyle,
-          formik.touched.course &&
-            formik.errors.course &&
-            formInputWarningStyle,
-        ]}
+        input_props={{ min: 0, max: 360, type: "number" }}
       />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="true_airspeed" css={[labelStyle]}>
-          True Airspeed
-        </label>
-        <div css={[warningStyle]}>
-          {formik.touched.true_airspeed &&
-            formik.errors.true_airspeed &&
-            formik.errors.true_airspeed}
-        </div>
-      </div>
-      <input
+      <FormTextInput
         id="true_airspeed"
-        name="true_airspeed"
-        type="number"
+        label="True Airspeed"
+        theme_object={theme_object}
+        error={formik.touched.true_airspeed && formik.errors.true_airspeed}
+        onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         value={formik.values.true_airspeed}
-        onBlur={formik.handleBlur}
-        min={0}
-        css={[
-          formInputStyle,
-          formik.touched.true_airspeed &&
-            formik.errors.true_airspeed &&
-            formInputWarningStyle,
-        ]}
+        input_props={{ min: 0, type: "number" }}
       />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="wind_direction" css={[labelStyle]}>
-          Wind Direction
-        </label>
-        <div css={[warningStyle]}>
-          {formik.touched.wind_direction &&
-            formik.errors.wind_direction &&
-            formik.errors.wind_direction}
-        </div>
-      </div>
-      <input
+      <FormTextInput
         id="wind_direction"
-        name="wind_direction"
-        type="number"
+        label="Wind Direction"
+        theme_object={theme_object}
+        error={formik.touched.wind_direction && formik.errors.wind_direction}
+        onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         value={formik.values.wind_direction}
-        onBlur={formik.handleBlur}
-        min={0}
-        max={360}
-        css={[
-          formInputStyle,
-          formik.touched.wind_direction &&
-            formik.errors.wind_direction &&
-            formInputWarningStyle,
-        ]}
+        input_props={{ min: 0, type: "number" }}
       />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="wind_speed" css={[labelStyle]}>
-          Wind Speed
-        </label>
-
-        <div css={[warningStyle]}>
-          {formik.touched.wind_speed &&
-            formik.errors.wind_speed &&
-            formik.errors.wind_speed}
-        </div>
-      </div>
-      <input
+      <FormTextInput
         id="wind_speed"
-        name="wind_speed"
-        type="number"
+        label="Wind Speed"
+        theme_object={theme_object}
+        error={formik.touched.wind_speed && formik.errors.wind_speed}
+        onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         value={formik.values.wind_speed}
+        input_props={{ min: 0, type: "number" }}
+      />
+      <FormTextInput
+        id="heading"
+        label="Heading"
+        theme_object={theme_object}
         onBlur={formik.handleBlur}
-        min={0}
-        css={[
-          formInputStyle,
-          formik.touched.wind_speed &&
-            formik.errors.wind_speed &&
-            formInputWarningStyle,
-        ]}
-      />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="heading" css={[labelStyle]}>
-          Heading
-        </label>
-      </div>
-      <input
+        onChange={formik.handleChange}
         value={Math.round(correction_data.heading)}
-        css={[calculatedStyle]}
-        readOnly={true}
+        disabled
       />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="groundSpeed" css={[labelStyle]}>
-          Ground Speed
-        </label>
-      </div>
-      <input
+      <FormTextInput
+        id="ground_speed"
+        label="Ground Speed"
+        theme_object={theme_object}
+        onBlur={formik.handleBlur}
+        onChange={formik.handleChange}
         value={Math.round(correction_data.ground_speed)}
-        css={[calculatedStyle]}
-        readOnly={true}
+        disabled
       />
-      <div css={[labelWarningStyle]}>
-        <label htmlFor="windCorrectionAngle" css={[labelStyle]}>
-          Wind Correction Angle
-        </label>
-      </div>
-      <input
+      <FormTextInput
+        id="wind_correction_angle"
+        label="Wind Correction Angle"
+        theme_object={theme_object}
+        onBlur={formik.handleBlur}
+        onChange={formik.handleChange}
         value={
-          (correction_data.wind_correction_angle <= 0 ? "" : "+") +
+          (Math.round(correction_data.wind_correction_angle) <= 0 ? "" : "+") +
           Math.round(correction_data.wind_correction_angle)
         }
-        css={[calculatedStyle]}
-        readOnly={true}
+        disabled
       />
     </form>
   );

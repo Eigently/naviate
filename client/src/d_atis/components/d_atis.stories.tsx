@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
@@ -10,7 +9,7 @@ import { DAtis } from "./d_atis";
 import { Surrounding } from "../../storybook/surrounding";
 
 export default {
-  title: "D-ATIS",
+  title: "Aviation/D-ATIS",
   component: DAtis,
 };
 

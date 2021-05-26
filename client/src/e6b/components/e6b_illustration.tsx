@@ -39,7 +39,7 @@ export const E6BIllustration: FC<IllustrationProps> = ({
       display: flex;
       justify-content: center;
       align-items: stretch;
-      margin: 1rem;
+      padding: 1rem;
       min-height: 200px;
     `,
     svg: css`
