@@ -19,6 +19,7 @@ export const Home: FC<HomeProps> = ({ theme_object, PageContainer }) => {
     content_grid: css`
       padding: 0.5rem 1rem;
       margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
       display: grid;
       grid-template-columns: 100%;
       grid-row-gap: 1rem;

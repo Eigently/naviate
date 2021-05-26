@@ -11,6 +11,7 @@ import { ThemeObject } from "../../theme/interface";
 
 import { E6BData } from "../interface";
 import { FormTextInput } from "../../form/form_text_input";
+import { mq } from "../../style/breakpoints";
 
 type FormProps = {
   theme_object: t.TypeOf<typeof ThemeObject>;
@@ -55,12 +56,21 @@ export const E6BForm: FC<FormProps> = ({
   const styles = {
     form_grid_item: css`
       grid-column: span 1 / span 1;
+      border-radius: 0.25rem 0.25rem 0rem 0rem;
+      ${mq.md} {
+        border-radius: 0.25rem 0rem 0rem 0.25rem;
+      }
     `,
     form_flex: css`
       display: grid;
       grid-template-columns: 100%;
       background-color: ${lighten(0.08, theme_object.colors.background)};
       padding: 1rem;
+    `,
+    heading: css`
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: ${theme_object.colors.base};
     `,
   };
 
@@ -74,17 +84,7 @@ export const E6BForm: FC<FormProps> = ({
       onSubmit={formik.handleSubmit}
       css={[styles.form_grid_item, styles.form_flex]}
     >
-      <h1
-        css={[
-          css`
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: ${theme_object.colors.base};
-          `,
-        ]}
-      >
-        E6B Calculator
-      </h1>
+      <h1 css={[styles.heading]}>E6B Calculator</h1>
       <FormTextInput
         id="course"
         label="Course"
