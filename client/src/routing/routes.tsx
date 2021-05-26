@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { NotFound } from "../error/not_found/not_found";
 import { FullPageLoading } from "../loader/full_page_loader/full_page_loading";
 
 const HomeContainer = lazy(async () => {
@@ -20,6 +21,7 @@ export const Routes = () => (
       <Suspense fallback={<FullPageLoading />}>
         <Switch>
           <Route exact path="/" component={HomeContainer} />
+          <Route component={NotFound} />
         </Switch>
       </Suspense>
     </div>
