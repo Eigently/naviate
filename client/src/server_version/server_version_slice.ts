@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL } from "../state/api";
+import { API_URL } from "../constants/api";
 import { VersionAPIResponse, VersionState } from "./interface";
 
 let initialState: VersionState = {
