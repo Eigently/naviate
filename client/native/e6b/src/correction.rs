@@ -5,13 +5,8 @@ use crate::{math_utils, utils};
 #[wasm_bindgen]
 #[derive(Debug)]
 pub struct CorrectionData {
-    #[wasm_bindgen(js_name = "windCorrectionAngle")]
     pub wind_correction_angle: f64,
-
-    #[wasm_bindgen(js_name = "groundSpeed")]
     pub ground_speed: f64,
-
-    #[wasm_bindgen(js_name = "heading")]
     pub heading: f64,
 }
 
