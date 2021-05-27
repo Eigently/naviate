@@ -80,12 +80,24 @@ export const DAtis: FC<DAtisProps> = ({
       border-radius: 0.25rem;
       align-self: flex-end;
       min-width: 33.33%;
+      &:hover {
+        background-color: ${lighten(
+          0.1,
+          theme_object.colors.naviate_dark_blue
+        )};
+      }
     `,
     submit_disabled: css`
       background-color: ${desaturate(
         0.9,
         theme_object.colors.naviate_dark_blue
       )};
+      &:hover {
+        background-color: ${desaturate(
+          0.9,
+          theme_object.colors.naviate_dark_blue
+        )};
+      }
     `,
   };
 
