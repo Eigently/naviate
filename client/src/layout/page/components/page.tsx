@@ -24,6 +24,10 @@ export const Page: FC<PageProps> = ({
       flex-direction: column;
       color: ${theme_object.colors.base};
       background-color: ${theme_object.colors.background};
+      &,
+      & * {
+        transition: color 200ms, background-color 200ms;
+      }
     `,
     grow: css`
       flex-grow: 1;

@@ -12,6 +12,7 @@ import { mq } from "../../style/breakpoints";
 import { useFormik } from "formik";
 import { FormTextInput } from "../../form/form_text_input";
 import { DAtisData } from "../interface";
+import { Spinner } from "../../loader/spinner/spinner";
 
 type DAtisProps = {
   theme_object: t.TypeOf<typeof ThemeObject>;
@@ -52,10 +53,10 @@ export const DAtis: FC<DAtisProps> = ({
       display: flex;
       flex-direction: column;
       grid-column: span 2 / span 2;
-      padding: 1rem;
       /* margin-bottom: 1rem; */
       height: 300px;
       overflow-y: auto;
+      margin: 1rem;
     `,
     heading: css`
       font-size: 1.5rem;
@@ -66,13 +67,13 @@ export const DAtis: FC<DAtisProps> = ({
       font-family: monospace;
       font-size: 0.9rem;
       color: ${theme_object.colors.base};
-      padding-bottom: 1rem;
     `,
     error: css`
       color: ${theme_object.colors.naviate_red};
     `,
     submit: css`
       background-color: ${theme_object.colors.naviate_dark_blue};
+      transition: background-color 0.2s;
       color: ${readableColor(theme_object.colors.naviate_dark_blue)};
       padding: 0.25rem;
       margin: 1rem 0rem 1rem 0rem;
@@ -82,7 +83,7 @@ export const DAtis: FC<DAtisProps> = ({
     `,
     submit_disabled: css`
       background-color: ${desaturate(
-        0.7,
+        0.9,
         theme_object.colors.naviate_dark_blue
       )};
     `,
@@ -105,7 +106,7 @@ export const DAtis: FC<DAtisProps> = ({
   return (
     <div css={[styles.grid, shadow.lg]}>
       <form
-        css={[styles.form_grid_item, styles.form_flex]}
+        css={[styles.form_grid_item, styles.form_flex, shadow.md]}
         onSubmit={formik.handleSubmit}
       >
         <h1 css={[styles.heading]}>ATIS</h1>
@@ -118,6 +119,7 @@ export const DAtis: FC<DAtisProps> = ({
           onChange={formik.handleChange}
           value={formik.values.icao_code.toLocaleUpperCase()}
           input_props={{ type: "text" }}
+          disabled={d_atis_data.status === "loading"}
         />
         <button
           type="submit"
@@ -132,7 +134,31 @@ export const DAtis: FC<DAtisProps> = ({
       </form>
       <div css={[styles.form_grid_item, styles.content_flex]}>
         {d_atis_data.status === "loading" && (
-          <h1 css={[styles.heading]}>Loading...</h1>
+          <>
+            <h1 css={[styles.heading]}>Loading...</h1>
+            <div
+              css={[
+                styles.content_flex,
+                css`
+                  justify-content: center;
+                `,
+              ]}
+            >
+              <div
+                css={[
+                  css`
+                    min-width: 6rem;
+                    align-self: center;
+                  `,
+                ]}
+              >
+                <Spinner
+                  theme_object={theme_object}
+                  color={theme_object.colors.naviate_dark_blue}
+                />
+              </div>
+            </div>
+          </>
         )}
         {d_atis_data.status === "succeeded" && (
           <>

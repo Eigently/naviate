@@ -12,6 +12,7 @@ import { ThemeObject } from "../../theme/interface";
 import { E6BData } from "../interface";
 import { FormTextInput } from "../../form/form_text_input";
 import { mq } from "../../style/breakpoints";
+import { shadow } from "../../style/shadow";
 
 type FormProps = {
   theme_object: t.TypeOf<typeof ThemeObject>;
@@ -82,7 +83,7 @@ export const E6BForm: FC<FormProps> = ({
   return (
     <form
       onSubmit={formik.handleSubmit}
-      css={[styles.form_grid_item, styles.form_flex]}
+      css={[styles.form_grid_item, styles.form_flex, shadow.md]}
     >
       <h1 css={[styles.heading]}>E6B Calculator</h1>
       <FormTextInput

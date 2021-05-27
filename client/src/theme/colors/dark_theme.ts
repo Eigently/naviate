@@ -5,7 +5,7 @@ import { ThemeObject } from "../interface";
 export const dark_theme: t.TypeOf<typeof ThemeObject> = {
   colors: {
     base: "#ffffff",
-    background: "#000",
+    background: "#161616",
     ...brand_colors,
   },
 };

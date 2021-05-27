@@ -28,6 +28,19 @@ export const FormTextInput: FC<FormTextInputProps> = ({
   input_props = {},
   disabled = false,
 }) => {
+  const border_color = mix(
+    0.9,
+    theme_object.colors.background,
+    theme_object.colors.base
+  );
+  const border_warning_color = theme_object.colors.naviate_red;
+  const lightened_border_color = mix(
+    0.8,
+    border_color,
+    theme_object.colors.base
+  );
+  const lightened_border_warning_color = lighten(0.2, border_warning_color);
+
   const styles = {
     label_warning_flex: css`
       display: flex;
@@ -50,10 +63,14 @@ export const FormTextInput: FC<FormTextInputProps> = ({
     `,
     data_entry: css`
       border-radius: 0.25rem;
-      border: solid 0.2rem
-        ${mix(0.8, theme_object.colors.background, theme_object.colors.base)};
-      color: ${readableColor(theme_object.colors.background)};
+      border: solid 2px ${border_color};
+      color: ${theme_object.colors.base};
       padding: 0.25rem 0.5rem;
+      transition: border-color 0.5s, background-color 0.5s;
+      &:hover,
+      &:focus {
+        border-color: ${lightened_border_color};
+      }
     `,
     calculated: css`
       background-color: ${mix(
@@ -67,7 +84,11 @@ export const FormTextInput: FC<FormTextInputProps> = ({
     `,
     form_input_warning: css`
       box-sizing: border-box;
-      border: solid 0.2rem ${theme_object.colors.naviate_red};
+      border-color: ${border_warning_color};
+      &:hover,
+      &:focus {
+        border-color: ${lightened_border_warning_color};
+      }
     `,
   };
 

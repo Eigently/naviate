@@ -14,7 +14,7 @@ type HomeProps = {
   theme_object: t.TypeOf<typeof ThemeObject>;
 };
 
-export const Home: FC<HomeProps> = ({ theme_object, PageContainer }) => {
+export const Home: FC<HomeProps> = ({ PageContainer }) => {
   const styles = {
     content_grid: css`
       padding: 0.5rem 1rem;
