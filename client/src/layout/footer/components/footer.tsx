@@ -69,7 +69,7 @@ export const Footer: FC<FooterProps> = ({
         <div css={[styles.right_footer]}>
           <div css={[styles.version_label]}>Client:</div>
           <a
-            href={`https://github.com/eigently/naviate-client/commit/${client_version}`}
+            href={`https://github.com/eigently/naviate/commit/${client_version}`}
             css={[styles.version]}
           >
             {client_version}
@@ -78,7 +78,7 @@ export const Footer: FC<FooterProps> = ({
             <>
               <div css={[styles.version_label]}>Server:</div>
               <a
-                href={`https://github.com/eigently/naviate-server/commit/${server_version}`}
+                href={`https://github.com/eigently/naviate/commit/${server_version}`}
                 css={[styles.version]}
               >
                 {server_version}
