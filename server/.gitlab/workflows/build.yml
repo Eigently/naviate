@@ -6,13 +6,14 @@ build musl binary:
   needs:
     - unit test
   before_script:
+    - cd server
     - apt-get update && apt-get install musl-dev musl-tools -y
     - rustup target add x86_64-unknown-linux-musl
   script:
     - cargo build --release --target=x86_64-unknown-linux-musl
   artifacts:
     paths:
-      - target/
+      - server/target/
 
 build glibc binary:
   image: rust:latest
@@ -20,7 +21,8 @@ build glibc binary:
   needs:
     - unit test
   script:
+    - cd server
     - cargo build --release
   artifacts:
     paths:
-      - target/
+      - server/target/

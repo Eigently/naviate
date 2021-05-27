@@ -1,5 +1,7 @@
 unit test:
   image: rust:latest
   stage: test
+  before_script:
+    - cd server
   script:
     - cargo test
