@@ -36,6 +36,22 @@
       content="%PUBLIC_URL%/browserconfig.xml"
     />
     <meta name="theme-color" content="#3a0ca3" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-EWMF2FBFHZ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-EWMF2FBFHZ");
+    </script>
+
     <title>Naviate</title>
   </head>
   <body>
