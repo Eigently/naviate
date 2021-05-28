@@ -1,105 +1,31 @@
 /** @jsxImportSource @emotion/react */
-import * as t from "io-ts";
-import { css } from "@emotion/react";
 import { FC } from "react";
-import { desaturate, lighten, readableColor } from "polished";
 import * as Yup from "yup";
+import {
+  Box,
+  Stack,
+  Button,
+  Input,
+  Flex,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Heading,
+  Skeleton,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-import { ThemeObject } from "../../theme/interface";
-
-import { shadow } from "../../style/shadow";
-import { mq } from "../../style/breakpoints";
 import { useFormik } from "formik";
-import { FormTextInput } from "../../form/form_text_input";
 import { DAtisData } from "../interface";
-import { Spinner } from "../../loader/spinner/spinner";
 
 type DAtisProps = {
-  theme_object: t.TypeOf<typeof ThemeObject>;
   d_atis_data: DAtisData;
   handle_get_d_atis: (icao_code: string) => void;
 };
 
-export const DAtis: FC<DAtisProps> = ({
-  theme_object,
-  d_atis_data,
-  handle_get_d_atis,
-}) => {
-  const styles = {
-    grid: css`
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      ${mq.md} {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      background-color: ${lighten(0.05, theme_object.colors.background)};
-      border-radius: 0.25rem;
-      align-items: stretch;
-    `,
-    form_grid_item: css`
-      grid-column: span 1 / span 1;
-      border-radius: 0.25rem 0.25rem 0rem 0rem;
-      ${mq.md} {
-        border-radius: 0.25rem 0rem 0rem 0.25rem;
-      }
-    `,
-    form_flex: css`
-      display: flex;
-      flex-direction: column;
-      background-color: ${lighten(0.08, theme_object.colors.background)};
-      padding: 1rem;
-    `,
-    content_flex: css`
-      display: flex;
-      flex-direction: column;
-      grid-column: span 2 / span 2;
-      /* margin-bottom: 1rem; */
-      height: 300px;
-      overflow-y: auto;
-      margin: 1rem;
-    `,
-    heading: css`
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: ${theme_object.colors.base};
-    `,
-    d_atis_content: css`
-      font-family: monospace;
-      font-size: 0.9rem;
-      color: ${theme_object.colors.base};
-    `,
-    error: css`
-      color: ${theme_object.colors.naviate_red};
-    `,
-    submit: css`
-      background-color: ${theme_object.colors.naviate_dark_blue};
-      transition: background-color 0.2s;
-      color: ${readableColor(theme_object.colors.naviate_dark_blue)};
-      padding: 0.25rem;
-      margin: 1rem 0rem 1rem 0rem;
-      border-radius: 0.25rem;
-      align-self: flex-end;
-      min-width: 33.33%;
-      &:hover {
-        background-color: ${lighten(
-          0.1,
-          theme_object.colors.naviate_dark_blue
-        )};
-      }
-    `,
-    submit_disabled: css`
-      background-color: ${desaturate(
-        0.9,
-        theme_object.colors.naviate_dark_blue
-      )};
-      &:hover {
-        background-color: ${desaturate(
-          0.9,
-          theme_object.colors.naviate_dark_blue
-        )};
-      }
-    `,
-  };
+export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
+  const error_color = useColorModeValue("red.500", "red.300");
 
   const formik = useFormik({
     initialValues: {
@@ -116,88 +42,100 @@ export const DAtis: FC<DAtisProps> = ({
   });
 
   return (
-    <div css={[styles.grid, shadow.lg]}>
-      <form
-        css={[styles.form_grid_item, styles.form_flex, shadow.md]}
-        onSubmit={formik.handleSubmit}
+    <Box
+      display="grid"
+      gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }}
+      borderWidth="1px"
+      borderRadius="md"
+      shadow="md"
+      alignItems="stretch"
+    >
+      <Box
+        borderRightWidth={{ md: "1px" }}
+        borderBottomWidth={{ base: "1px", md: "0px" }}
       >
-        <h1 css={[styles.heading]}>ATIS</h1>
-        <FormTextInput
-          id="icao_code"
-          label="ICAO Code"
-          theme_object={theme_object}
-          error={formik.touched.icao_code && formik.errors.icao_code}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          value={formik.values.icao_code.toLocaleUpperCase()}
-          input_props={{ type: "text" }}
-          disabled={d_atis_data.status === "loading"}
-        />
-        <button
-          type="submit"
-          css={[
-            styles.submit,
-            d_atis_data.status === "loading" && styles.submit_disabled,
-          ]}
-          disabled={d_atis_data.status === "loading"}
-        >
-          Submit
-        </button>
-      </form>
-      <div css={[styles.form_grid_item, styles.content_flex]}>
+        <form onSubmit={formik.handleSubmit}>
+          <Stack spacing="4" m="4">
+            <Heading size="lg">ATIS</Heading>
+            <FormControl
+              id="icao_code"
+              isInvalid={
+                !!formik.touched.icao_code && !!formik.errors.icao_code
+              }
+            >
+              <Flex justifyContent="space-between">
+                <FormLabel fontSize="sm" mb="0.5">
+                  ICAO Code
+                </FormLabel>
+                <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
+                  {formik.errors.icao_code}
+                </FormErrorMessage>
+              </Flex>
+              <Input
+                value={formik.values.icao_code.toLocaleUpperCase()}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                size="sm"
+                borderRadius="md"
+                disabled={d_atis_data.status === "loading"}
+              />
+            </FormControl>
+            <Button
+              colorScheme="blue"
+              disabled={d_atis_data.status === "loading"}
+              variant="outline"
+              size="sm"
+              borderRadius="md"
+            >
+              Submit
+            </Button>
+          </Stack>
+        </form>
+      </Box>
+      <Stack
+        gridColumn="span 2 / span 2"
+        m="4"
+        overflow="scroll"
+        height="12rem"
+      >
         {d_atis_data.status === "loading" && (
           <>
-            <h1 css={[styles.heading]}>Loading...</h1>
-            <div
-              css={[
-                styles.content_flex,
-                css`
-                  justify-content: center;
-                `,
-              ]}
-            >
-              <div
-                css={[
-                  css`
-                    min-width: 6rem;
-                    align-self: center;
-                  `,
-                ]}
-              >
-                <Spinner
-                  theme_object={theme_object}
-                  color={theme_object.colors.naviate_dark_blue}
-                />
-              </div>
-            </div>
+            <Skeleton borderRadius="md">
+              <Heading size="md">KBNA</Heading>
+            </Skeleton>
+            <Skeleton borderRadius="md" height="10rem" />
           </>
         )}
         {d_atis_data.status === "succeeded" && (
           <>
-            <h1 css={[styles.heading]}>{d_atis_data.data?.icao_code}</h1>
+            <Heading size="md">{d_atis_data.data?.icao_code}</Heading>
             {d_atis_data.data?.d_atis_type === "COMBINED" ? (
-              <div css={[styles.d_atis_content]}>
+              <Text fontFamily="monospace">
                 {d_atis_data.data?.d_atis_combined}
-              </div>
+              </Text>
             ) : (
               <>
-                <div css={[styles.d_atis_content]}>
+                <Text fontFamily="monospace">
                   {d_atis_data.data?.d_atis_arrival}
-                </div>
-                <div css={[styles.d_atis_content]}>
+                </Text>
+                <Text fontFamily="monospace">
                   {d_atis_data.data?.d_atis_departure}
-                </div>
+                </Text>
               </>
             )}
           </>
         )}
         {d_atis_data.status === "failed" && (
           <>
-            <h1 css={[styles.heading, styles.error]}>Error</h1>
-            <div css={[styles.error]}>{d_atis_data.error}</div>
+            <Heading size="md" color={error_color}>
+              Error
+            </Heading>
+            <Text fontFamily="monospace" color={error_color}>
+              {d_atis_data.error}
+            </Text>
           </>
         )}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 };

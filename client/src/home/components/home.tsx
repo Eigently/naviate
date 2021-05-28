@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import * as t from "io-ts";
-import { css } from "@emotion/react";
 import { FC } from "react";
 
 import { ThemeObject } from "../../theme/interface";
-import { container } from "../../style/container";
 
 import { E6BContainer } from "../../e6b/container/e6b_container";
 import { DAtisContainer } from "../../d_atis/container/d_atis_container";
+import { Stack } from "@chakra-ui/react";
 
 type HomeProps = {
   PageContainer: React.FC;
@@ -15,23 +14,12 @@ type HomeProps = {
 };
 
 export const Home: FC<HomeProps> = ({ PageContainer }) => {
-  const styles = {
-    content_grid: css`
-      padding: 0.5rem 1rem;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      display: grid;
-      grid-template-columns: 100%;
-      grid-row-gap: 1rem;
-    `,
-  };
-
   return (
     <PageContainer>
-      <div css={[container, styles.content_grid]}>
+      <Stack spacing="4" py="4">
         <E6BContainer />
         <DAtisContainer />
-      </div>
+      </Stack>
     </PageContainer>
   );
 };

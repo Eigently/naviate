@@ -19,23 +19,9 @@ export default {
   },
 };
 
-const Template: Story<ComponentProps<typeof E6B>> = (args) => (
-  <Surrounding args={args}>
-    <E6B {...args} />
-  </Surrounding>
-);
+const Template: Story<ComponentProps<typeof E6B>> = (args) => <E6B {...args} />;
 
-export const Light = Template.bind({});
-Light.args = {
-  theme_object: light_theme,
-  correction_data: initial_state,
-};
-
-/**
- * The thing can also be dark...
- */
-export const Dark = Template.bind({});
-Dark.args = {
-  theme_object: dark_theme,
+export const Primary = Template.bind({});
+Primary.args = {
   correction_data: initial_state,
 };

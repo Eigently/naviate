@@ -14,41 +14,19 @@ export default {
 };
 
 const Template: Story<ComponentProps<typeof Footer>> = (args) => (
-  <div
-    css={[
-      css`
-        background-color: ${args.theme_object.colors.background};
-        padding: 3rem;
-      `,
-    ]}
-  >
-    <Footer {...args} />
-  </div>
+  <Footer {...args} />
 );
 
-export const Light = Template.bind({});
-Light.args = {
+export const Primary = Template.bind({});
+Primary.args = {
   theme_object: light_theme,
   client_version: "clientversion",
   server_version: "serverversion",
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
-  theme_object: dark_theme,
-  client_version: "clientversion",
-  server_version: "serverversion",
-};
-
-export const Loading = Template.bind({});
-Loading.args = {
-  theme_object: light_theme,
-  client_version: "clientversion",
 };
 
 export const Uneven = Template.bind({});
 Uneven.args = {
   theme_object: light_theme,
-  client_version: "clientve",
+  client_version: "clien",
   server_version: "serverversion",
 };

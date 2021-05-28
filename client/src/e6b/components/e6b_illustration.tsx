@@ -1,26 +1,18 @@
-/** @jsxImportSource @emotion/react */
 import * as t from "io-ts";
-import { css } from "@emotion/react";
 import { FC } from "react";
 
 import { Circle } from "@visx/shape";
-
-import { ThemeObject } from "../../theme/interface";
 import { E6BData } from "../interface";
-import { mq } from "../../style/breakpoints";
 import { E6BIllustrationArrow } from "./e6b_illustration_arrow";
 import { E6BIllustrationCompass } from "./e6b_illustration_compass";
 import { E6BIllustrationLabels } from "./e6b_illustration_labels";
+import { AspectRatio, Flex, useColorModeValue } from "@chakra-ui/react";
 
 type IllustrationProps = {
-  theme_object: t.TypeOf<typeof ThemeObject>;
   correction_data: t.TypeOf<typeof E6BData>;
 };
 
-export const E6BIllustration: FC<IllustrationProps> = ({
-  theme_object,
-  correction_data,
-}) => {
+export const E6BIllustration: FC<IllustrationProps> = ({ correction_data }) => {
   const {
     wind_direction,
     wind_speed,
@@ -30,23 +22,9 @@ export const E6BIllustration: FC<IllustrationProps> = ({
     ground_speed,
   } = correction_data;
 
-  const styles = {
-    svg_container: css`
-      grid-column: span 1 / span 1;
-      ${mq.md} {
-        grid-column: span 2 / span 2;
-      }
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      padding: 1rem;
-      min-height: 200px;
-    `,
-    svg: css`
-      max-width: 500px;
-      flex-grow: 1;
-    `,
-  };
+  const wind_color = useColorModeValue("orange.600", "orange.300");
+  const course_color = useColorModeValue("red.600", "red.300");
+  const heading_color = useColorModeValue("blue.600", "blue.300");
 
   const normalize_length = (length: number) =>
     (length / Math.max(wind_speed, true_airspeed, ground_speed, 1)) * 20;
@@ -63,7 +41,7 @@ export const E6BIllustration: FC<IllustrationProps> = ({
       <E6BIllustrationArrow
         id="course"
         length={length}
-        color={theme_object.colors.naviate_red}
+        color={course_color}
         from={{ x: 50, y: 50 }}
         to={{
           x: 50 + length * Math.cos(course_direction_radians),
@@ -80,7 +58,7 @@ export const E6BIllustration: FC<IllustrationProps> = ({
       <E6BIllustrationArrow
         id="heading"
         length={length}
-        color={theme_object.colors.naviate_dark_blue}
+        color={heading_color}
         from={{ x: 50, y: 50 }}
         to={{
           x: 50 + length * Math.cos(heading_radians),
@@ -98,7 +76,7 @@ export const E6BIllustration: FC<IllustrationProps> = ({
       <E6BIllustrationArrow
         id="wind"
         length={length}
-        color={theme_object.colors.naviate_orange}
+        color={wind_color}
         from={{
           x: 50 + 40 * Math.cos(wind_direction_radians),
           y: 50 - 40 * Math.sin(wind_direction_radians),
@@ -112,22 +90,26 @@ export const E6BIllustration: FC<IllustrationProps> = ({
   };
 
   return (
-    <div css={[styles.svg_container]}>
-      <svg viewBox="0 0 100 100" css={[styles.svg]}>
-        <E6BIllustrationCompass theme_object={theme_object} />
-        <g>
-          <WindArrow />
-          <CourseArrow />
-          <HeadingArrow />
-        </g>
-        <g>
-          <Circle cx={50} cy={50} r={1} fill={theme_object.colors.base} />
-        </g>
-        <E6BIllustrationLabels
-          theme_object={theme_object}
-          correction_data={correction_data}
-        />
-      </svg>
-    </div>
+    <Flex
+      gridColumn={{ base: "span 1 / span 1", md: "span 2 / span 2" }}
+      p={4}
+      justifyContent="center"
+      alignItems="stretch"
+    >
+      <AspectRatio ratio={1} maxWidth="500px" flexGrow={1}>
+        <svg viewBox="0 0 100 100">
+          <E6BIllustrationCompass />
+          <g>
+            <WindArrow />
+            <CourseArrow />
+            <HeadingArrow />
+          </g>
+          <g>
+            <Circle cx={50} cy={50} r={1} fill="black" />
+          </g>
+          <E6BIllustrationLabels correction_data={correction_data} />
+        </svg>
+      </AspectRatio>
+    </Flex>
   );
 };

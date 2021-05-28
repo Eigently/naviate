@@ -16,9 +16,7 @@ export default {
 };
 
 const Template: Story<ComponentProps<typeof Header>> = (args) => (
-  <Surrounding args={args}>
-    <Header {...args} />
-  </Surrounding>
+  <Header {...args} />
 );
 
 export const Light = Template.bind({});

@@ -1,46 +1,40 @@
-/** @jsxImportSource @emotion/react */
-import * as t from "io-ts";
-import { css } from "@emotion/react";
-import { ThemeObject } from "../../theme/interface";
 import { Circle } from "@visx/shape";
 import { Text } from "@visx/text";
+import { chakra, useColorModeValue } from "@chakra-ui/system";
 
 type IllustrationLabelProps = {
   color?: string;
   label: string;
-  theme_object: t.TypeOf<typeof ThemeObject>;
   x: number;
   y: number;
 };
+
+const ChakraCircle = chakra(Circle);
+const ChakraText = chakra(Text);
 
 export const E6BIllustrationLabel: React.FC<IllustrationLabelProps> = ({
   color,
   label,
   x,
   y,
-  theme_object,
 }) => {
-  const styles = {
-    label: css`
-      font-size: 0.2rem;
-      font-family: monospace;
-      font-weight: bold;
-      fill: ${theme_object.colors.base};
-    `,
-  };
+  const fill_color = useColorModeValue("black", "white");
 
   return (
     <>
-      {color && <Circle cx={x} cy={y} r={1.5} fill={color} />}
-      <Text
+      {color && <ChakraCircle cx={x} cy={y} r={1.5} fill={color} />}
+      <ChakraText
         x={x + 3}
         y={y}
-        css={[styles.label]}
+        fontSize="0.2rem"
+        fontFamily="monospace"
+        fontWeight="bold"
+        fill={fill_color}
         textAnchor="start"
         verticalAnchor="middle"
       >
         {label}
-      </Text>
+      </ChakraText>
     </>
   );
 };

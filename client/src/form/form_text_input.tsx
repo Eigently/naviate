@@ -63,7 +63,7 @@ export const FormTextInput: FC<FormTextInputProps> = ({
     `,
     data_entry: css`
       border-radius: 0.25rem;
-      border: solid 2px ${border_color};
+      border: solid 1px ${border_color};
       color: ${theme_object.colors.base};
       padding: 0.25rem 0.5rem;
       transition: border-color 0.5s, background-color 0.5s;

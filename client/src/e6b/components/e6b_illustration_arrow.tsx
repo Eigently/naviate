@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
+import { chakra } from "@chakra-ui/system";
 import { MarkerArrow } from "@visx/marker";
 import { Line } from "@visx/shape";
 import { FC } from "react";
+
+const ChakraMarkerArrow = chakra(MarkerArrow);
+const ChakraLine = chakra(Line);
 
 type E6BIllustrationArrowProps = {
   id: string;
@@ -29,8 +33,13 @@ export const E6BIllustrationArrow: FC<E6BIllustrationArrowProps> = ({
 }) => {
   return nonzero(
     <>
-      <MarkerArrow id={`${id}-arrowhead`} fill={color} refX={2} size={3} />
-      <Line
+      <ChakraMarkerArrow
+        id={`${id}-arrowhead`}
+        fill={color}
+        refX={2}
+        size={3}
+      />
+      <ChakraLine
         from={from}
         to={to}
         stroke={color}

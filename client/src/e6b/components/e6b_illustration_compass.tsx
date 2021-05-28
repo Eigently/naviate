@@ -1,87 +1,81 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { chakra, useColorModeValue } from "@chakra-ui/react";
 import { Circle, Line } from "@visx/shape";
 import { Text } from "@visx/text";
-import * as t from "io-ts";
-import { mix } from "polished";
-import { ThemeObject } from "../../theme/interface";
 
-type IllustrationProps = {
-  theme_object: t.TypeOf<typeof ThemeObject>;
-};
+type IllustrationProps = {};
 
-export const E6BIllustrationCompass: React.FC<IllustrationProps> = ({
-  theme_object,
-}) => {
-  const faint_color = mix(
-    0.1,
-    theme_object.colors.base,
-    theme_object.colors.background
-  );
+export const E6BIllustrationCompass: React.FC<IllustrationProps> = () => {
+  const ChakraCircle = chakra(Circle);
+  const ChakraLine = chakra(Line);
+  const ChakraText = chakra(Text);
 
-  const styles = {
-    label: css`
-      font-size: 0.3rem;
-      font-family: monospace;
-      fill: ${theme_object.colors.base};
-    `,
-  };
+  const text_color = useColorModeValue("black", "white");
+  const faint_color = useColorModeValue("gray.50", "gray.700");
+  const circle_background = useColorModeValue("white", "gray.800");
 
   return (
     <g>
-      <Circle
+      <ChakraCircle
         cx={50}
         cy={50}
         r={40}
         stroke={faint_color}
-        fill={theme_object.colors.background}
+        fill={circle_background}
       />
-      <Line
+      <ChakraLine
         from={{ x: 10, y: 50 }}
         to={{ x: 90, y: 50 }}
         stroke={faint_color}
       />
-      <Line
+      <ChakraLine
         from={{ x: 50, y: 10 }}
         to={{ x: 50, y: 90 }}
         stroke={faint_color}
       />
-      <Text
+      <ChakraText
         x={50}
-        y={9}
-        css={[styles.label]}
+        y={8}
+        fill={text_color}
+        fontSize="0.25rem"
+        fontFamily="monospace"
         textAnchor="middle"
         verticalAnchor="end"
       >
         N
-      </Text>
-      <Text
+      </ChakraText>
+      <ChakraText
         x={50}
-        y={91}
-        css={[styles.label]}
+        y={92}
+        fill={text_color}
+        fontSize="0.25rem"
+        fontFamily="monospace"
         textAnchor="middle"
         verticalAnchor="start"
       >
         S
-      </Text>
-      <Text
-        x={9}
+      </ChakraText>
+      <ChakraText
+        x={8}
         y={50}
-        css={[styles.label]}
+        fill={text_color}
+        fontSize="0.25rem"
+        fontFamily="monospace"
         textAnchor="end"
         verticalAnchor="middle"
       >
         W
-      </Text>
-      <Text
-        x={91}
+      </ChakraText>
+      <ChakraText
+        x={92}
         y={50}
-        css={[styles.label]}
+        fill={text_color}
+        fontSize="0.25rem"
+        fontFamily="monospace"
         textAnchor="start"
         verticalAnchor="middle"
       >
         E
-      </Text>
+      </ChakraText>
     </g>
   );
 };

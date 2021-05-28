@@ -1,21 +1,20 @@
-/** @jsxImportSource @emotion/react */
 import * as t from "io-ts";
-import { css } from "@emotion/react";
 import { FC } from "react";
-import { lighten } from "polished";
 import { useFormik } from "formik";
 
 import * as Yup from "yup";
-
-import { ThemeObject } from "../../theme/interface";
-
 import { E6BData } from "../interface";
-import { FormTextInput } from "../../form/form_text_input";
-import { mq } from "../../style/breakpoints";
-import { shadow } from "../../style/shadow";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Heading,
+  Flex,
+  Stack,
+} from "@chakra-ui/react";
 
 type FormProps = {
-  theme_object: t.TypeOf<typeof ThemeObject>;
   correction_data: t.TypeOf<typeof E6BData>;
   handle_form_input: (
     course: number,
@@ -26,7 +25,6 @@ type FormProps = {
 };
 
 export const E6BForm: FC<FormProps> = ({
-  theme_object,
   handle_form_input,
   correction_data,
 }) => {
@@ -54,108 +52,158 @@ export const E6BForm: FC<FormProps> = ({
     }),
   });
 
-  const styles = {
-    form_grid_item: css`
-      grid-column: span 1 / span 1;
-      border-radius: 0.25rem 0.25rem 0rem 0rem;
-      ${mq.md} {
-        border-radius: 0.25rem 0rem 0rem 0.25rem;
-      }
-    `,
-    form_flex: css`
-      display: grid;
-      grid-template-columns: 100%;
-      background-color: ${lighten(0.08, theme_object.colors.background)};
-      padding: 1rem;
-    `,
-    heading: css`
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: ${theme_object.colors.base};
-    `,
-  };
-
   if (Object.keys(formik.errors).length === 0) {
     const { course, true_airspeed, wind_direction, wind_speed } = formik.values;
     handle_form_input(course, true_airspeed, wind_direction, wind_speed);
   }
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      css={[styles.form_grid_item, styles.form_flex, shadow.md]}
-    >
-      <h1 css={[styles.heading]}>E6B Calculator</h1>
-      <FormTextInput
-        id="course"
-        label="Course"
-        theme_object={theme_object}
-        error={formik.touched.course && formik.errors.course}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values.course}
-        input_props={{ min: 0, max: 360, type: "number" }}
-      />
-      <FormTextInput
-        id="true_airspeed"
-        label="True Airspeed"
-        theme_object={theme_object}
-        error={formik.touched.true_airspeed && formik.errors.true_airspeed}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values.true_airspeed}
-        input_props={{ min: 0, type: "number" }}
-      />
-      <FormTextInput
-        id="wind_direction"
-        label="Wind Direction"
-        theme_object={theme_object}
-        error={formik.touched.wind_direction && formik.errors.wind_direction}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values.wind_direction}
-        input_props={{ min: 0, type: "number" }}
-      />
-      <FormTextInput
-        id="wind_speed"
-        label="Wind Speed"
-        theme_object={theme_object}
-        error={formik.touched.wind_speed && formik.errors.wind_speed}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values.wind_speed}
-        input_props={{ min: 0, type: "number" }}
-      />
-      <FormTextInput
-        id="heading"
-        label="Heading"
-        theme_object={theme_object}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={Math.round(correction_data.heading)}
-        disabled
-      />
-      <FormTextInput
-        id="ground_speed"
-        label="Ground Speed"
-        theme_object={theme_object}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={Math.round(correction_data.ground_speed)}
-        disabled
-      />
-      <FormTextInput
-        id="wind_correction_angle"
-        label="Wind Correction Angle"
-        theme_object={theme_object}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={
-          (Math.round(correction_data.wind_correction_angle) <= 0 ? "" : "+") +
-          Math.round(correction_data.wind_correction_angle)
-        }
-        disabled
-      />
+    <form onSubmit={formik.handleSubmit}>
+      <Stack
+        spacing="4"
+        padding="4"
+        borderRightWidth={{ md: "1px" }}
+        borderBottomWidth={{ base: "1px", md: "0px" }}
+      >
+        <Heading size="lg">E6B Calculator</Heading>
+        <FormControl
+          id="course"
+          isInvalid={!!formik.touched.course && !!formik.errors.course}
+        >
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Course
+            </FormLabel>
+            <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
+              {formik.errors.course}
+            </FormErrorMessage>
+          </Flex>
+          <Input
+            type="number"
+            value={formik.values.course}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            size="sm"
+            borderRadius="md"
+            min={0}
+            max={360}
+          />
+        </FormControl>
+        <FormControl
+          id="true_airspeed"
+          isInvalid={
+            !!formik.touched.true_airspeed && !!formik.errors.true_airspeed
+          }
+        >
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              True Airspeed
+            </FormLabel>
+            <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
+              {formik.errors.true_airspeed}
+            </FormErrorMessage>
+          </Flex>
+          <Input
+            type="number"
+            value={formik.values.true_airspeed}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            size="sm"
+            borderRadius="md"
+          />
+        </FormControl>
+        <FormControl
+          id="wind_direction"
+          isInvalid={
+            !!formik.touched.wind_direction && !!formik.errors.wind_direction
+          }
+        >
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Wind Direction
+            </FormLabel>
+            <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
+              {formik.errors.wind_direction}
+            </FormErrorMessage>
+          </Flex>
+          <Input
+            type="number"
+            value={formik.values.wind_direction}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            size="sm"
+            borderRadius="md"
+            min={0}
+            max={360}
+          />
+        </FormControl>
+        <FormControl
+          id="wind_speed"
+          isInvalid={!!formik.touched.wind_speed && !!formik.errors.wind_speed}
+        >
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Wind Speed
+            </FormLabel>
+            <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
+              {formik.errors.wind_speed}
+            </FormErrorMessage>
+          </Flex>
+          <Input
+            type="number"
+            value={formik.values.wind_speed}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            size="sm"
+            borderRadius="md"
+          />
+        </FormControl>
+        <FormControl id="heading">
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Heading
+            </FormLabel>
+          </Flex>
+          <Input
+            type="number"
+            value={Math.round(correction_data.heading)}
+            size="sm"
+            disabled
+            borderRadius="md"
+          />
+        </FormControl>
+        <FormControl id="ground_speed">
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Ground Speed
+            </FormLabel>
+          </Flex>
+          <Input
+            type="number"
+            value={Math.round(correction_data.ground_speed)}
+            size="sm"
+            disabled
+            borderRadius="md"
+          />
+        </FormControl>
+        <FormControl id="wind_correction_angle">
+          <Flex justifyContent="space-between">
+            <FormLabel fontSize="sm" mb="0.5">
+              Wind Correction Angle
+            </FormLabel>
+          </Flex>
+          <Input
+            value={
+              (Math.round(correction_data.wind_correction_angle) <= 0
+                ? ""
+                : "+") + Math.round(correction_data.wind_correction_angle)
+            }
+            size="sm"
+            disabled
+            borderRadius="md"
+          />
+        </FormControl>
+      </Stack>
     </form>
   );
 };

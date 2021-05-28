@@ -1,13 +1,8 @@
-/** @jsxImportSource @emotion/react */
 import * as t from "io-ts";
 import { FC } from "react";
-import { css } from "@emotion/react";
-import { lighten } from "polished";
+import { Container, Flex, Icon, Grid, Text, Link } from "@chakra-ui/react";
 
 import { ThemeObject } from "../../../theme/interface";
-
-import { container } from "../../../style/container";
-import { shadow } from "../../../style/shadow";
 
 import { ReactComponent as Heart } from "../assets/tabler-icon-heart.svg";
 import { ReactComponent as Plane } from "../assets/tabler-icon-plane.svg";
@@ -23,70 +18,40 @@ export const Footer: FC<FooterProps> = ({
   client_version,
   server_version,
 }) => {
-  const styles = {
-    outer_footer: css`
-      color: ${theme_object.colors.base};
-      background-color: ${lighten(0.04, theme_object.colors.background)};
-      font-size: 0.8rem;
-      padding: 1rem 2rem;
-    `,
-    inner_footer: css`
-      ${container}
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    `,
-    right_footer: css`
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-    `,
-    inline_svg: css`
-      height: 0.8rem;
-      display: inline;
-      vertical-align: baseline;
-    `,
-    version_label: css`
-      text-align: right;
-      margin-right: 0.5rem;
-    `,
-    version: css`
-      font-family: monospace;
-    `,
-  };
-
   return (
-    <div css={[shadow.surrounding, styles.outer_footer]}>
-      <div css={[styles.inner_footer]}>
-        <div>
-          <div>
+    <Container maxW="container.xl" fontSize="xs">
+      <Flex direction="row" justifyContent="space-between" my={4}>
+        <Flex direction="column">
+          <Text>
             Made with
-            <Heart css={[styles.inline_svg]} />
+            <Icon mx={1} verticalAlign="baseline" as={Heart} />
             for
-            <Plane css={[styles.inline_svg]} />
+            <Icon mx={1} verticalAlign="baseline" as={Plane} />
             Simulation
-          </div>
-          <div>Do not use for real world flight navigation.</div>
-        </div>
-        <div css={[styles.right_footer]}>
-          <div css={[styles.version_label]}>Client:</div>
-          <a
+          </Text>
+          <Text>Do not use for real world flight navigation.</Text>
+        </Flex>
+        <Grid templateColumns="1fr auto">
+          <Text mr="1">Client:</Text>
+          <Link
             href={`https://github.com/eigently/naviate/commit/${client_version}`}
-            css={[styles.version]}
+            fontFamily="monospace"
           >
             {client_version.substr(0, 7)}
-          </a>
+          </Link>
           {server_version && (
             <>
-              <div css={[styles.version_label]}>Server:</div>
-              <a
+              <Text mr="1">Server:</Text>
+              <Link
                 href={`https://github.com/eigently/naviate/commit/${server_version}`}
-                css={[styles.version]}
+                fontFamily="monospace"
               >
-                {server_version?.substr(0, 7)}
-              </a>
+                {server_version.substr(0, 7)}
+              </Link>
             </>
           )}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Flex>
+    </Container>
   );
 };
