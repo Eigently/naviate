@@ -35,7 +35,7 @@ deploy dockerized musl:
   dependencies:
     - build and push dockerized musl
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
       changes:
         - server/
