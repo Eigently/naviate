@@ -86,6 +86,7 @@ export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
               variant="outline"
               size="sm"
               borderRadius="md"
+              type="submit"
             >
               Submit
             </Button>
