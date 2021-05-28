@@ -8,7 +8,7 @@ build and push dockerized musl:
   rules:
     - when: on_success
       changes:
-        - server/
+        - server/**/*
         - .gitlab-ci.yml
     - when: never
   artifacts:
@@ -38,7 +38,7 @@ deploy dockerized musl:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
       changes:
-        - server/
+        - server/**/*
         - .gitlab-ci.yml
     - when: never
   before_script:

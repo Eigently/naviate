@@ -8,7 +8,7 @@ build musl binary:
   rules:
     - when: on_success
       changes:
-        - server/
+        - server/**/*
         - .gitlab-ci.yml
     - when: never
   before_script:
@@ -29,7 +29,7 @@ build glibc binary:
   rules:
     - when: on_success
       changes:
-        - server/
+        - server/**/*
         - .gitlab-ci.yml
     - when: never
   script:
