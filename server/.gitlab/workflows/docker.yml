@@ -5,6 +5,12 @@ build and push dockerized musl:
     - build musl binary
   dependencies:
     - build musl binary
+  rules:
+    - when: on_success
+      changes:
+        - server/
+        - .gitlab-ci.yml
+    - when: never
   artifacts:
     paths:
       - server/naviate.dockerimage
@@ -31,6 +37,9 @@ deploy dockerized musl:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
       when: on_success
+      changes:
+        - server/
+        - .gitlab-ci.yml
     - when: never
   before_script:
     # Setup SSH keys

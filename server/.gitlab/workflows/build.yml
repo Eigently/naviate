@@ -5,6 +5,12 @@ build musl binary:
     - rust-build
   needs:
     - unit test
+  rules:
+    - when: on_success
+      changes:
+        - server/
+        - .gitlab-ci.yml
+    - when: never
   before_script:
     - cd server
     - apt-get update && apt-get install musl-dev musl-tools -y
@@ -20,6 +26,12 @@ build glibc binary:
   stage: build
   needs:
     - unit test
+  rules:
+    - when: on_success
+      changes:
+        - server/
+        - .gitlab-ci.yml
+    - when: never
   script:
     - cd server
     - cargo build --release

@@ -1,6 +1,12 @@
 unit test:
   image: rust:latest
   stage: test
+  rules:
+    - when: on_success
+      changes:
+        - server/
+        - .gitlab-ci.yml
+    - when: never
   before_script:
     - cd server
   script:
