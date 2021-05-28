@@ -110,6 +110,7 @@ export const E6BForm: FC<FormProps> = ({
             onBlur={formik.handleBlur}
             size="sm"
             borderRadius="md"
+            min={0}
           />
         </FormControl>
         <FormControl
@@ -156,6 +157,7 @@ export const E6BForm: FC<FormProps> = ({
             onBlur={formik.handleBlur}
             size="sm"
             borderRadius="md"
+            min={0}
           />
         </FormControl>
         <FormControl id="heading">
