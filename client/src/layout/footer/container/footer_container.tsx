@@ -32,8 +32,8 @@ export const FooterContainer: FC = () => {
   return (
     <Footer
       theme_object={theme_object}
-      client_version={client_version_string.substr(0, 7)}
-      server_version={server_version_string?.substr(0, 7)}
+      client_version={client_version_string}
+      server_version={server_version_string}
     />
   );
 };
