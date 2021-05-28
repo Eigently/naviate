@@ -6,7 +6,6 @@ unit test:
       changes:
         - server/**/*
         - .gitlab-ci.yml
-    - when: never
   before_script:
     - cd server
   script:

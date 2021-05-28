@@ -10,7 +10,6 @@ build and push dockerized musl:
       changes:
         - server/**/*
         - .gitlab-ci.yml
-    - when: never
   artifacts:
     paths:
       - server/naviate.dockerimage
@@ -40,7 +39,6 @@ deploy dockerized musl:
       changes:
         - server/**/*
         - .gitlab-ci.yml
-    - when: never
   before_script:
     # Setup SSH keys
     - cd server
