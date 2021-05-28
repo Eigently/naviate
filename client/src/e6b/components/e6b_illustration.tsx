@@ -1,12 +1,14 @@
 import * as t from "io-ts";
 import { FC } from "react";
+import { AspectRatio, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
 
 import { Circle } from "@visx/shape";
 import { E6BData } from "../interface";
 import { E6BIllustrationArrow } from "./e6b_illustration_arrow";
 import { E6BIllustrationCompass } from "./e6b_illustration_compass";
 import { E6BIllustrationLabels } from "./e6b_illustration_labels";
-import { AspectRatio, Flex, useColorModeValue } from "@chakra-ui/react";
+
+const ChakraCircle = chakra(Circle);
 
 type IllustrationProps = {
   correction_data: t.TypeOf<typeof E6BData>;
@@ -22,9 +24,11 @@ export const E6BIllustration: FC<IllustrationProps> = ({ correction_data }) => {
     ground_speed,
   } = correction_data;
 
-  const wind_color = useColorModeValue("orange.600", "orange.300");
+  const wind_color = useColorModeValue("orange.500", "orange.300");
   const course_color = useColorModeValue("red.600", "red.300");
   const heading_color = useColorModeValue("blue.600", "blue.300");
+  const faint_color = useColorModeValue("gray.50", "gray.700");
+  const circle_background = useColorModeValue("white", "gray.800");
 
   const normalize_length = (length: number) =>
     (length / Math.max(wind_speed, true_airspeed, ground_speed, 1)) * 20;
@@ -105,7 +109,20 @@ export const E6BIllustration: FC<IllustrationProps> = ({ correction_data }) => {
             <HeadingArrow />
           </g>
           <g>
-            <Circle cx={50} cy={50} r={1} fill="black" />
+            <ChakraCircle
+              cx={50}
+              cy={50}
+              r={1}
+              fill={faint_color}
+              stroke={faint_color}
+            />
+            <ChakraCircle
+              cx={50}
+              cy={50}
+              r={40}
+              stroke={faint_color}
+              fill="none"
+            />
           </g>
           <E6BIllustrationLabels correction_data={correction_data} />
         </svg>
