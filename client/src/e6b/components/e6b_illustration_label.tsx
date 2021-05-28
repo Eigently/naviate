@@ -22,11 +22,11 @@ export const E6BIllustrationLabel: React.FC<IllustrationLabelProps> = ({
 
   return (
     <>
-      {color && <ChakraCircle cx={x} cy={y} r={1.5} fill={color} />}
+      {color && <ChakraCircle cx={x} cy={y} r={1.8} fill={color} />}
       <ChakraText
         x={x + 3}
         y={y}
-        fontSize="0.2rem"
+        fontSize="0.25rem"
         fontFamily="monospace"
         fontWeight="bold"
         fill={fill_color}

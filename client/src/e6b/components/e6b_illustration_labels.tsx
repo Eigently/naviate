@@ -27,38 +27,38 @@ export const E6BIllustrationLabels: React.FC<IllustrationLabelsProps> = ({
     <g>
       <E6BIllustrationLabel
         x={2}
-        y={2}
+        y={4}
         color={wind_color}
         label={`Wind: ${wind_direction} @ ${wind_speed}`}
       />
       <E6BIllustrationLabel
         x={2}
-        y={7}
+        y={9}
         label={`WCA: ${wind_correction_angle <= 0 ? "" : "+"}${Math.round(
           wind_correction_angle
         )}°`}
       />
       <E6BIllustrationLabel
-        x={70}
-        y={2}
+        x={66}
+        y={4}
         color={course_color}
         label={`Course: ${course}°`}
       />
       <E6BIllustrationLabel
-        x={70}
-        y={7}
+        x={66}
+        y={9}
         color={heading_color}
         label={`Heading: ${Math.round(heading)}°`}
       />
       <E6BIllustrationLabel
         x={2}
-        y={90}
+        y={88}
         color={course_color}
         label={`GS: ${Math.round(ground_speed)}`}
       />
       <E6BIllustrationLabel
         x={2}
-        y={95}
+        y={93}
         color={heading_color}
         label={`TAS: ${true_airspeed}`}
       />
