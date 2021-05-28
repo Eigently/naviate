@@ -11,7 +11,7 @@ import { Footer } from "../components/footer";
 export const FooterContainer: FC = () => {
   const theme_object = useAppSelector(select_theme_object);
   const dispatch = useAppDispatch();
-  const client_version_string = process.env.REACT_APP_GIT_SHA || "develop";
+  const client_version_string = process.env.REACT_APP_GIT_SHA || "development";
 
   const server_version = useAppSelector(select_server_version);
   const current_date = Date.now();

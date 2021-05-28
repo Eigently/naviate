@@ -72,7 +72,7 @@ export const Footer: FC<FooterProps> = ({
             href={`https://github.com/eigently/naviate/commit/${client_version}`}
             css={[styles.version]}
           >
-            {client_version.substr(0, 8)}
+            {client_version.substr(0, 7)}
           </a>
           {server_version && (
             <>
@@ -81,7 +81,7 @@ export const Footer: FC<FooterProps> = ({
                 href={`https://github.com/eigently/naviate/commit/${server_version}`}
                 css={[styles.version]}
               >
-                {server_version?.substr(0, 8)}
+                {server_version?.substr(0, 7)}
               </a>
             </>
           )}
