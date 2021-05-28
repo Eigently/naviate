@@ -19,7 +19,7 @@ export const E6BIllustrationLabels: React.FC<IllustrationLabelsProps> = ({
     wind_speed,
   },
 }) => {
-  const wind_color = useColorModeValue("orange.600", "orange.300");
+  const wind_color = useColorModeValue("orange.500", "orange.300");
   const course_color = useColorModeValue("red.600", "red.300");
   const heading_color = useColorModeValue("blue.600", "blue.300");
 
