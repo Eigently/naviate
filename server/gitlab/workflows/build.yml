@@ -6,10 +6,11 @@ build musl binary:
   needs:
     - unit test
   rules:
-    - when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
         - server/**/*
         - .gitlab-ci.yml
+      when: on_success
   before_script:
     - cd server
     - apt-get update && apt-get install musl-dev musl-tools -y
@@ -26,10 +27,11 @@ build glibc binary:
   needs:
     - unit test
   rules:
-    - when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
         - server/**/*
         - .gitlab-ci.yml
+      when: on_success
   script:
     - cd server
     - cargo build --release

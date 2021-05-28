@@ -6,10 +6,11 @@ build and push dockerized musl:
   dependencies:
     - build musl binary
   rules:
-    - when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
         - server/**/*
         - .gitlab-ci.yml
+      when: on_success
   artifacts:
     paths:
       - server/naviate.dockerimage
@@ -35,10 +36,10 @@ deploy dockerized musl:
     - build and push dockerized musl
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-      when: on_success
       changes:
         - server/**/*
         - .gitlab-ci.yml
+      when: on_success
   before_script:
     # Setup SSH keys
     - cd server

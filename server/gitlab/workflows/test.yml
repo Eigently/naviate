@@ -2,10 +2,11 @@ unit test:
   image: rust:latest
   stage: test
   rules:
-    - when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
         - server/**/*
         - .gitlab-ci.yml
+      when: on_success
   before_script:
     - cd server
   script:
