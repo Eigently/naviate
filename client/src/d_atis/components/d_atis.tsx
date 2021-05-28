@@ -93,12 +93,7 @@ export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
           </Stack>
         </form>
       </Box>
-      <Stack
-        gridColumn="span 2 / span 2"
-        m="4"
-        overflow="scroll"
-        height="12rem"
-      >
+      <Stack gridColumn="span 2 / span 2" m="4" overflowY="auto" height="12rem">
         {d_atis_data.status === "loading" && (
           <>
             <Skeleton borderRadius="md">
