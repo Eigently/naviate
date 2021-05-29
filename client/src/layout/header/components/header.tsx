@@ -66,11 +66,7 @@ export const Header: FC<HeaderProps> = ({
             <NavItem item={<Notes />} />
           </Grid>
           <Stack direction="row" alignItems="center">
-            <ThemeToggleButton
-              theme={theme}
-              theme_object={theme_object}
-              handle_toggle_theme={handle_toggle_theme}
-            />
+            <ThemeToggleButton />
           </Stack>
         </Flex>
       </Container>
