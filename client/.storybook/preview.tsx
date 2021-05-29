@@ -10,7 +10,7 @@ import { StoryContext } from "@storybook/react";
 import * as React from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { withPerformance } from "storybook-addon-performance";
-import { theme } from "../src/theme/colors/theme";
+import { theme } from "../src/styles/theme";
 
 /**
  * Add global context for RTL-LTR switching
