@@ -11,14 +11,8 @@ const Template: Story<ComponentProps<typeof NavItem>> = (args) => (
   <NavItem {...args} />
 );
 
-export const Light = Template.bind({});
-Light.args = {
-  active: true,
-  item: "E6B",
-};
-
-export const Dark = Template.bind({});
-Dark.args = {
+export const Primary = Template.bind({});
+Primary.args = {
   active: true,
   item: "E6B",
 };

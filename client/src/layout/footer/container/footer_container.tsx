@@ -2,38 +2,36 @@
 import { FC } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
-import { select_theme_object } from "../../../theme/selectors/select_theme_object";
-import { get_server_version } from "../../../server_version/server_version_slice";
-import { select_server_version } from "../../../server_version/selectors/select_server_version";
+
+import { getServerVersion } from "../../../server_version/server_version_slice";
+import { selectServerVersion } from "../../../server_version/selectors/select_server_version";
 
 import { Footer } from "../components/footer";
 
 export const FooterContainer: FC = () => {
-  const theme_object = useAppSelector(select_theme_object);
   const dispatch = useAppDispatch();
-  const client_version_string = process.env.REACT_APP_GIT_SHA || "development";
+  const clientVersionString = process.env.REACT_APP_GIT_SHA || "development";
 
-  const server_version = useAppSelector(select_server_version);
-  const current_date = Date.now();
-  const ms_to_hour = 1000 * 60 * 60;
+  const serverVersion = useAppSelector(selectServerVersion);
+  const currentDate = Date.now();
+  const msToHour = 1000 * 60 * 60;
   if (
-    server_version.status === "IDLE" ||
-    (server_version.last_updated &&
-      current_date - server_version.last_updated >= ms_to_hour)
+    serverVersion.status === "IDLE" ||
+    (serverVersion.lastUpdated &&
+      currentDate - serverVersion.lastUpdated >= msToHour)
   ) {
-    dispatch(get_server_version());
+    dispatch(getServerVersion());
   }
 
-  let server_version_string;
-  if (server_version.status === "SUCCEEDED") {
-    server_version_string = server_version.version;
+  let serverVersionString;
+  if (serverVersion.status === "SUCCEEDED") {
+    serverVersionString = serverVersion.version;
   }
 
   return (
     <Footer
-      theme_object={theme_object}
-      client_version={client_version_string}
-      server_version={server_version_string}
+      clientVersion={clientVersionString}
+      serverVersion={serverVersionString}
     />
   );
 };

@@ -1,11 +1,8 @@
-import * as t from "io-ts";
 import { FC, ReactNode } from "react";
-import { ThemeObject } from "../../../theme/interface";
 import { Flex, Container } from "@chakra-ui/react";
 
 type PageProps = {
   children: ReactNode;
-  theme_object: t.TypeOf<typeof ThemeObject>;
   HeaderContainer: ReactNode;
   FooterContainer: ReactNode;
 };

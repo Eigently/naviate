@@ -1,4 +1,3 @@
-import * as t from "io-ts";
 import { FC } from "react";
 import { AspectRatio, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
 
@@ -11,83 +10,83 @@ import { E6BIllustrationLabels } from "./e6b_illustration_labels";
 const ChakraCircle = chakra(Circle);
 
 type IllustrationProps = {
-  correction_data: t.TypeOf<typeof E6BData>;
+  correctionData: E6BData;
 };
 
-export const E6BIllustration: FC<IllustrationProps> = ({ correction_data }) => {
+export const E6BIllustration: FC<IllustrationProps> = ({ correctionData }) => {
   const {
-    wind_direction,
-    wind_speed,
+    windDirection,
+    windSpeed,
     course,
-    true_airspeed,
+    trueAirspeed,
     heading,
-    ground_speed,
-  } = correction_data;
+    groundSpeed,
+  } = correctionData;
 
-  const wind_color = useColorModeValue("orange.500", "orange.300");
-  const course_color = useColorModeValue("red.600", "red.300");
-  const heading_color = useColorModeValue("blue.600", "blue.300");
-  const faint_color = useColorModeValue("gray.50", "gray.700");
-  const circle_background = useColorModeValue("white", "gray.800");
+  const windColor = useColorModeValue("orange.500", "orange.300");
+  const courseColor = useColorModeValue("red.600", "red.300");
+  const headingColor = useColorModeValue("blue.600", "blue.300");
+  const faintColor = useColorModeValue("gray.50", "gray.700");
+  const circleBackgroundColor = useColorModeValue("white", "gray.800");
 
-  const normalize_length = (length: number) =>
-    (length / Math.max(wind_speed, true_airspeed, ground_speed, 1)) * 20;
+  const normalizeLength = (length: number) =>
+    (length / Math.max(windSpeed, trueAirspeed, groundSpeed, 1)) * 20;
 
-  const convert_to_radians = (aviation_degrees: number) => {
+  const convertToRadians = (aviation_degrees: number) => {
     const res = (((-aviation_degrees + 450) % 360) / 180) * Math.PI;
     return res;
   };
 
   const CourseArrow: React.FC = () => {
-    const course_direction_radians = convert_to_radians(course);
-    const length = normalize_length(ground_speed);
+    const courseDirectionRadians = convertToRadians(course);
+    const length = normalizeLength(groundSpeed);
     return (
       <E6BIllustrationArrow
         id="course"
         length={length}
-        color={course_color}
+        color={courseColor}
         from={{ x: 50, y: 50 }}
         to={{
-          x: 50 + length * Math.cos(course_direction_radians),
-          y: 50 - length * Math.sin(course_direction_radians),
+          x: 50 + length * Math.cos(courseDirectionRadians),
+          y: 50 - length * Math.sin(courseDirectionRadians),
         }}
       />
     );
   };
 
   const HeadingArrow: React.FC = () => {
-    const heading_radians = convert_to_radians(heading);
-    const length = normalize_length(true_airspeed);
+    const headingRadians = convertToRadians(heading);
+    const length = normalizeLength(trueAirspeed);
     return (
       <E6BIllustrationArrow
         id="heading"
         length={length}
-        color={heading_color}
+        color={headingColor}
         from={{ x: 50, y: 50 }}
         to={{
-          x: 50 + length * Math.cos(heading_radians),
-          y: 50 - length * Math.sin(heading_radians),
+          x: 50 + length * Math.cos(headingRadians),
+          y: 50 - length * Math.sin(headingRadians),
         }}
       />
     );
   };
 
   const WindArrow: React.FC = () => {
-    const wind_direction_radians = convert_to_radians(wind_direction);
-    const length = normalize_length(wind_speed);
+    const windDirectionRadians = convertToRadians(windDirection);
+    const length = normalizeLength(windSpeed);
 
     return (
       <E6BIllustrationArrow
         id="wind"
         length={length}
-        color={wind_color}
+        color={windColor}
         from={{
-          x: 50 + 40 * Math.cos(wind_direction_radians),
-          y: 50 - 40 * Math.sin(wind_direction_radians),
+          x: 50 + 40 * Math.cos(windDirectionRadians),
+          y: 50 - 40 * Math.sin(windDirectionRadians),
         }}
         to={{
-          x: 50 + (40 - length) * Math.cos(wind_direction_radians),
-          y: 50 - (40 - length) * Math.sin(wind_direction_radians),
+          x: 50 + (40 - length) * Math.cos(windDirectionRadians),
+          y: 50 - (40 - length) * Math.sin(windDirectionRadians),
         }}
       />
     );
@@ -113,18 +112,18 @@ export const E6BIllustration: FC<IllustrationProps> = ({ correction_data }) => {
               cx={50}
               cy={50}
               r={1}
-              fill={faint_color}
-              stroke={faint_color}
+              fill={faintColor}
+              stroke={faintColor}
             />
             <ChakraCircle
               cx={50}
               cy={50}
               r={40}
-              stroke={faint_color}
+              stroke={faintColor}
               fill="none"
             />
           </g>
-          <E6BIllustrationLabels correction_data={correction_data} />
+          <E6BIllustrationLabels correctionData={correctionData} />
         </svg>
       </AspectRatio>
     </Flex>

@@ -18,7 +18,7 @@ export const E6BIllustrationLabel: React.FC<IllustrationLabelProps> = ({
   x,
   y,
 }) => {
-  const fill_color = useColorModeValue("black", "white");
+  const fillColor = useColorModeValue("black", "white");
 
   return (
     <>
@@ -29,7 +29,7 @@ export const E6BIllustrationLabel: React.FC<IllustrationLabelProps> = ({
         fontSize="0.25rem"
         fontFamily="monospace"
         fontWeight="bold"
-        fill={fill_color}
+        fill={fillColor}
         textAnchor="start"
         verticalAnchor="middle"
       >

@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { useColorModeValue } from "@chakra-ui/color-mode";
+import { chakra } from "@chakra-ui/react";
 import { css, keyframes } from "@emotion/react";
 import { FC, useEffect, useState } from "react";
-import { light_theme } from "../../theme/colors/light_theme";
+
 import { ReactComponent as Plane } from "./assets/plane.svg";
+const ChakraPlane = chakra(Plane);
 
 export const FullPageLoading: FC = () => {
   const planeAnimation = keyframes`
@@ -53,13 +56,14 @@ export const FullPageLoading: FC = () => {
     return () => clearTimeout(timeout);
   });
 
+  const backgroundColor = useColorModeValue("white", "gray.800");
+  const color = useColorModeValue("black", "white");
+
   const styles = {
     container: css`
       display: flex;
-      background-color: ${light_theme.colors.naviate_dark_blue};
       flex-grow: 1;
       font-size: 1rem;
-      color: white;
     `,
     centering: css`
       margin: auto;
@@ -68,7 +72,6 @@ export const FullPageLoading: FC = () => {
       animation: ${planeAnimation} 4s ease-in-out infinite;
       width: 30rem;
       height: 10rem;
-      fill: white;
     `,
     message: css`
       text-align: center;
@@ -78,13 +81,13 @@ export const FullPageLoading: FC = () => {
   };
 
   return (
-    <div css={[styles.container]}>
+    <chakra.div css={[styles.container]} bg={backgroundColor} color={color}>
       <div css={[styles.centering]}>
         <div>
-          <Plane css={[styles.plane]} />
+          <ChakraPlane css={[styles.plane]} fill={color} />
         </div>
         <div css={[styles.message]}>{message}...</div>
       </div>
-    </div>
+    </chakra.div>
   );
 };

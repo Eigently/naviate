@@ -1,4 +1,3 @@
-import * as t from "io-ts";
 import { FC } from "react";
 import { useFormik } from "formik";
 
@@ -15,25 +14,25 @@ import {
 } from "@chakra-ui/react";
 
 type FormProps = {
-  correction_data: t.TypeOf<typeof E6BData>;
-  handle_form_input: (
+  correctionData: E6BData;
+  handleFormInput: (
     course: number,
-    true_airspeed: number,
-    wind_direction: number,
-    wind_speed: number
+    trueAirspeed: number,
+    windDirection: number,
+    windSpeed: number
   ) => void;
 };
 
 export const E6BForm: FC<FormProps> = ({
-  handle_form_input,
-  correction_data,
+  handleFormInput: handleFormInput,
+  correctionData: correctionData,
 }) => {
   const formik = useFormik({
     initialValues: {
-      course: correction_data.course,
-      true_airspeed: correction_data.true_airspeed,
-      wind_direction: correction_data.wind_direction,
-      wind_speed: correction_data.wind_speed,
+      course: correctionData.course,
+      trueAirspeed: correctionData.trueAirspeed,
+      windDirection: correctionData.windDirection,
+      windSpeed: correctionData.windSpeed,
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -43,18 +42,18 @@ export const E6BForm: FC<FormProps> = ({
         .required("Required.")
         .max(360, "At most 360°.")
         .min(0, "At least 0°."),
-      true_airspeed: Yup.number().required("Required.").min(0, "At least 0."),
-      wind_direction: Yup.number()
+      trueAirspeed: Yup.number().required("Required.").min(0, "At least 0."),
+      windDirection: Yup.number()
         .required("Required.")
         .max(360, "At most 360°.")
         .min(0, "At least 0°."),
-      wind_speed: Yup.number().required("Required.").min(0, "At least 0."),
+      windSpeed: Yup.number().required("Required.").min(0, "At least 0."),
     }),
   });
 
   if (Object.keys(formik.errors).length === 0) {
-    const { course, true_airspeed, wind_direction, wind_speed } = formik.values;
-    handle_form_input(course, true_airspeed, wind_direction, wind_speed);
+    const { course, trueAirspeed, windDirection, windSpeed } = formik.values;
+    handleFormInput(course, trueAirspeed, windDirection, windSpeed);
   }
 
   return (
@@ -90,9 +89,9 @@ export const E6BForm: FC<FormProps> = ({
           />
         </FormControl>
         <FormControl
-          id="true_airspeed"
+          id="trueAirspeed"
           isInvalid={
-            !!formik.touched.true_airspeed && !!formik.errors.true_airspeed
+            !!formik.touched.trueAirspeed && !!formik.errors.trueAirspeed
           }
         >
           <Flex justifyContent="space-between">
@@ -100,12 +99,12 @@ export const E6BForm: FC<FormProps> = ({
               True Airspeed
             </FormLabel>
             <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
-              {formik.errors.true_airspeed}
+              {formik.errors.trueAirspeed}
             </FormErrorMessage>
           </Flex>
           <Input
             type="number"
-            value={formik.values.true_airspeed}
+            value={formik.values.trueAirspeed}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             size="sm"
@@ -114,9 +113,9 @@ export const E6BForm: FC<FormProps> = ({
           />
         </FormControl>
         <FormControl
-          id="wind_direction"
+          id="windDirection"
           isInvalid={
-            !!formik.touched.wind_direction && !!formik.errors.wind_direction
+            !!formik.touched.windDirection && !!formik.errors.windDirection
           }
         >
           <Flex justifyContent="space-between">
@@ -124,12 +123,12 @@ export const E6BForm: FC<FormProps> = ({
               Wind Direction
             </FormLabel>
             <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
-              {formik.errors.wind_direction}
+              {formik.errors.windDirection}
             </FormErrorMessage>
           </Flex>
           <Input
             type="number"
-            value={formik.values.wind_direction}
+            value={formik.values.windDirection}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             size="sm"
@@ -139,20 +138,20 @@ export const E6BForm: FC<FormProps> = ({
           />
         </FormControl>
         <FormControl
-          id="wind_speed"
-          isInvalid={!!formik.touched.wind_speed && !!formik.errors.wind_speed}
+          id="windSpeed"
+          isInvalid={!!formik.touched.windSpeed && !!formik.errors.windSpeed}
         >
           <Flex justifyContent="space-between">
             <FormLabel fontSize="sm" mb="0.5">
               Wind Speed
             </FormLabel>
             <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
-              {formik.errors.wind_speed}
+              {formik.errors.windSpeed}
             </FormErrorMessage>
           </Flex>
           <Input
             type="number"
-            value={formik.values.wind_speed}
+            value={formik.values.windSpeed}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             size="sm"
@@ -168,13 +167,13 @@ export const E6BForm: FC<FormProps> = ({
           </Flex>
           <Input
             type="number"
-            value={Math.round(correction_data.heading)}
+            value={Math.round(correctionData.heading)}
             size="sm"
             disabled
             borderRadius="md"
           />
         </FormControl>
-        <FormControl id="ground_speed">
+        <FormControl id="groundSpeed">
           <Flex justifyContent="space-between">
             <FormLabel fontSize="sm" mb="0.5">
               Ground Speed
@@ -182,13 +181,13 @@ export const E6BForm: FC<FormProps> = ({
           </Flex>
           <Input
             type="number"
-            value={Math.round(correction_data.ground_speed)}
+            value={Math.round(correctionData.groundSpeed)}
             size="sm"
             disabled
             borderRadius="md"
           />
         </FormControl>
-        <FormControl id="wind_correction_angle">
+        <FormControl id="windCorrectionAngle">
           <Flex justifyContent="space-between">
             <FormLabel fontSize="sm" mb="0.5">
               Wind Correction Angle
@@ -196,9 +195,8 @@ export const E6BForm: FC<FormProps> = ({
           </Flex>
           <Input
             value={
-              (Math.round(correction_data.wind_correction_angle) <= 0
-                ? ""
-                : "+") + Math.round(correction_data.wind_correction_angle)
+              (Math.round(correctionData.windCorrectionAngle) <= 0 ? "" : "+") +
+              Math.round(correctionData.windCorrectionAngle)
             }
             size="sm"
             disabled

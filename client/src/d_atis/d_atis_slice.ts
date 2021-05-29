@@ -2,19 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { DAtisData } from "./interface";
 import { API_URL } from "../constants/api";
 
-export const initial_state: DAtisData = {
+export const initialState: DAtisData = {
   status: "idle",
 };
 
 type GetDAtisPayload = {
-  icao_code: string;
+  icaoCode: string;
 };
 
-export const get_d_atis = createAsyncThunk(
+export const getDAtis = createAsyncThunk(
   "d_atis/get",
-  async ({ icao_code }: GetDAtisPayload): Promise<DAtisData> => {
+  async ({ icaoCode: icaoCode }: GetDAtisPayload): Promise<DAtisData> => {
     const result: any = await fetch(
-      `${API_URL}/d_atis/${icao_code}`
+      `${API_URL}/d_atis/${icaoCode}`
     ).then((result) => result.json());
 
     if (result.error) {
@@ -27,29 +27,29 @@ export const get_d_atis = createAsyncThunk(
     return {
       status: "succeeded",
       data: {
-        icao_code: result.airport,
-        d_atis_type: result.d_atis_type,
-        d_atis_combined: result.d_atis_combined,
-        d_atis_departure: result.d_atis_departure,
-        d_atis_arrival: result.d_atis_arrival,
+        icaoCode: result.airport,
+        dAtisType: result.d_atis_type,
+        dAtisCombined: result.d_atis_combined,
+        dAtisDeparture: result.d_atis_departure,
+        dAtisArrival: result.d_atis_arrival,
       },
     };
   }
 );
 
-export const e6b_slice = createSlice({
+export const e6bSlice = createSlice({
   name: "e6b",
-  initialState: initial_state,
+  initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(get_d_atis.fulfilled, (state, action) => {
+      .addCase(getDAtis.fulfilled, (_state, action) => {
         return action.payload;
       })
-      .addCase(get_d_atis.pending, (state, action) => {
+      .addCase(getDAtis.pending, (_state, _action) => {
         return { status: "loading" };
       });
   },
 });
 
-export const { reducer } = e6b_slice;
+export const { reducer } = e6bSlice;

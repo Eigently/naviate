@@ -4,17 +4,15 @@ import { FC } from "react";
 import { DAtis } from "../components/d_atis";
 
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
-import { get_d_atis } from "../d_atis_slice";
-import { select_d_atis_data } from "../selectors/select_d_atis_data";
+import { getDAtis as getDAtis } from "../d_atis_slice";
+import { select_d_atis_data as selectDAtisData } from "../selectors/select_d_atis_data";
 
 export const DAtisContainer: FC = () => {
   const dispatch = useAppDispatch();
 
-  const d_atis_data = useAppSelector(select_d_atis_data);
-  const handle_get_d_atis = (icao_code: string) =>
-    dispatch(get_d_atis({ icao_code }));
+  const dAtisData = useAppSelector(selectDAtisData);
+  const handleGetDAtis = (icaoCode: string) =>
+    dispatch(getDAtis({ icaoCode: icaoCode }));
 
-  return (
-    <DAtis d_atis_data={d_atis_data} handle_get_d_atis={handle_get_d_atis} />
-  );
+  return <DAtis dAtisData={dAtisData} handleGetDAtis={handleGetDAtis} />;
 };

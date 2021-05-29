@@ -1,8 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
-import { shadow } from "../../style/shadow";
-import { lighten } from "polished";
 import { FC } from "react";
 
 import { ReactComponent as Sun } from "../assets/tabler-icon-sun.svg";
@@ -18,13 +15,12 @@ export const ThemeToggleButton: FC = () => {
     button: css`
       position: relative;
       border-radius: 9999px;
-      width: 2.5rem;
+      width: 2.7rem;
       height: 1.5rem;
 
       display: flex;
       flex-direction: row;
       align-items: center;
-      ${shadow.md};
 
       &:focus {
         outline: none;
@@ -69,13 +65,13 @@ export const ThemeToggleButton: FC = () => {
             <Moon css={[styles.button_icon]} />
           </div>
           <chakra.div
-            css={[styles.button_knob, styles.translate_x(1.25)]}
+            css={[styles.button_knob, styles.translate_x(1.45)]}
             bg={knobColor}
           />
         </>
       ) : (
         <>
-          <div css={[styles.button_icon, styles.translate_x(1.3)]}>
+          <div css={[styles.button_icon, styles.translate_x(1.5)]}>
             <Sun css={[styles.button_icon]} />
           </div>
           <chakra.div

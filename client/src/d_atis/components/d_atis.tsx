@@ -14,28 +14,30 @@ import {
   Skeleton,
   Text,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { useFormik } from "formik";
 import { DAtisData } from "../interface";
 
 type DAtisProps = {
-  d_atis_data: DAtisData;
-  handle_get_d_atis: (icao_code: string) => void;
+  dAtisData: DAtisData;
+  handleGetDAtis: (icaoCode: string) => void;
 };
 
-export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
-  const error_color = useColorModeValue("red.500", "red.300");
+export const DAtis: FC<DAtisProps> = ({ dAtisData, handleGetDAtis }) => {
+  const errorColor = useColorModeValue("red.500", "red.300");
+  const spinnerColor = useColorModeValue("blue.700", "blue.300");
 
   const formik = useFormik({
     initialValues: {
-      icao_code: "",
+      icaoCode: "",
     },
     onSubmit: (values) => {
-      handle_get_d_atis(values.icao_code.toLocaleUpperCase());
+      handleGetDAtis(values.icaoCode.toLocaleUpperCase());
     },
     validationSchema: Yup.object().shape({
-      icao_code: Yup.string()
+      icaoCode: Yup.string()
         .length(4, "Must be 4 characters.")
         .required("Required."),
     }),
@@ -58,43 +60,46 @@ export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
           <Stack spacing="4" m="4">
             <Heading size="lg">ATIS</Heading>
             <FormControl
-              id="icao_code"
-              isInvalid={
-                !!formik.touched.icao_code && !!formik.errors.icao_code
-              }
+              id="icaoCode"
+              isInvalid={!!formik.touched.icaoCode && !!formik.errors.icaoCode}
             >
               <Flex justifyContent="space-between">
                 <FormLabel fontSize="sm" mb="0.5">
                   ICAO Code
                 </FormLabel>
                 <FormErrorMessage fontSize="xs" textAlign="end" mt="0" mb="0.5">
-                  {formik.errors.icao_code}
+                  {formik.errors.icaoCode}
                 </FormErrorMessage>
               </Flex>
               <Input
-                value={formik.values.icao_code.toLocaleUpperCase()}
+                value={formik.values.icaoCode.toLocaleUpperCase()}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 size="sm"
                 borderRadius="md"
-                disabled={d_atis_data.status === "loading"}
+                disabled={dAtisData.status === "loading"}
               />
             </FormControl>
             <Button
               colorScheme="blue"
-              disabled={d_atis_data.status === "loading"}
+              disabled={dAtisData.status === "loading"}
               variant="outline"
               size="sm"
               borderRadius="md"
               type="submit"
+              display="flex"
+              alignItems="center"
             >
-              Submit
+              <Box mt="1">Submit</Box>
+              {dAtisData.status === "loading" && (
+                <Spinner color={spinnerColor} size="sm" ml="2" />
+              )}
             </Button>
           </Stack>
         </form>
       </Box>
       <Stack gridColumn="span 2 / span 2" m="4" overflowY="auto" height="12rem">
-        {d_atis_data.status === "loading" && (
+        {dAtisData.status === "loading" && (
           <>
             <Skeleton borderRadius="md">
               <Heading size="md">KBNA</Heading>
@@ -102,32 +107,32 @@ export const DAtis: FC<DAtisProps> = ({ d_atis_data, handle_get_d_atis }) => {
             <Skeleton borderRadius="md" height="10rem" />
           </>
         )}
-        {d_atis_data.status === "succeeded" && (
+        {dAtisData.status === "succeeded" && (
           <>
-            <Heading size="md">{d_atis_data.data?.icao_code}</Heading>
-            {d_atis_data.data?.d_atis_type === "COMBINED" ? (
+            <Heading size="md">{dAtisData.data?.icaoCode}</Heading>
+            {dAtisData.data?.dAtisType === "COMBINED" ? (
               <Text fontFamily="monospace">
-                {d_atis_data.data?.d_atis_combined}
+                {dAtisData.data?.dAtisCombined}
               </Text>
             ) : (
               <>
                 <Text fontFamily="monospace">
-                  {d_atis_data.data?.d_atis_arrival}
+                  {dAtisData.data?.dAtisArrival}
                 </Text>
                 <Text fontFamily="monospace">
-                  {d_atis_data.data?.d_atis_departure}
+                  {dAtisData.data?.dAtisDeparture}
                 </Text>
               </>
             )}
           </>
         )}
-        {d_atis_data.status === "failed" && (
+        {dAtisData.status === "failed" && (
           <>
-            <Heading size="md" color={error_color}>
+            <Heading size="md" color={errorColor}>
               Error
             </Heading>
-            <Text fontFamily="monospace" color={error_color}>
-              {d_atis_data.error}
+            <Text fontFamily="monospace" color={errorColor}>
+              {dAtisData.error}
             </Text>
           </>
         )}

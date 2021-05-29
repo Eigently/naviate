@@ -8,7 +8,7 @@ let initialState: VersionState = {
   },
 };
 
-export const get_server_version = createAsyncThunk(
+export const getServerVersion = createAsyncThunk(
   "version/get_server_version",
   async (): Promise<VersionAPIResponse> => {
     const response = await fetch(`${API_URL}/version`);
@@ -18,20 +18,20 @@ export const get_server_version = createAsyncThunk(
     return {
       status: "SUCCEEDED",
       version,
-      last_updated: Date.now(),
+      lastUpdated: Date.now(),
     };
   }
 );
 
-export const version_slice = createSlice({
+export const versionSlice = createSlice({
   name: "version",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(get_server_version.fulfilled, (state, action) => {
+    builder.addCase(getServerVersion.fulfilled, (state, action) => {
       state.server = action.payload;
     });
   },
 });
 
-export const { reducer } = version_slice;
+export const { reducer } = versionSlice;

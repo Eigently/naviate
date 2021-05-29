@@ -12,6 +12,7 @@ module.exports = {
     "@storybook/addon-toolbars",
     "@storybook/preset-create-react-app",
     "storybook-addon-performance/register",
+    "storybook-dark-mode",
   ],
   typescript: {
     reactDocgen: false,

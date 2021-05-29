@@ -8,9 +8,6 @@ import { css } from "@emotion/react";
 export default {
   title: "Loading/FullPageLoading",
   component: FullPageLoading,
-  argTypes: {
-    handle_form_input: { action: "handle_form_input" },
-  },
 };
 
 const Template: Story<ComponentProps<typeof FullPageLoading>> = (args) => (
@@ -26,8 +23,8 @@ const Template: Story<ComponentProps<typeof FullPageLoading>> = (args) => (
   </div>
 );
 
-export const Light = Template.bind({});
-Light.args = {};
+export const Primary = Template.bind({});
+Primary.args = {};
 
 /**
  * The thing can also be dark...

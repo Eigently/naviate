@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { Flex } from "@chakra-ui/react";
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NotFound } from "../error/not_found/not_found";
@@ -11,19 +10,13 @@ const HomeContainer = lazy(async () => {
 
 export const Routes = () => (
   <Router>
-    <div
-      css={css`
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      `}
-    >
+    <Flex direction="column" minHeight="100vh">
       <Suspense fallback={<FullPageLoading />}>
         <Switch>
           <Route exact path="/" component={HomeContainer} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>
-    </div>
+    </Flex>
   </Router>
 );

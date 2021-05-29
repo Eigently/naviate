@@ -7,14 +7,14 @@ type NavItemProps = {
 };
 
 export const NavItem: FC<NavItemProps> = ({ active = false, item }) => {
-  const active_color = useColorModeValue("purple.600", "purple.600");
-  const hover_color = useColorModeValue("purple.500", "purple.700");
+  const activeColor = useColorModeValue("purple.600", "purple.600");
+  const hoverColor = useColorModeValue("purple.500", "purple.700");
 
   return (
     <Link
       display="flex"
-      bg={active ? active_color : ""}
-      _hover={{ bg: hover_color }}
+      bg={active ? activeColor : ""}
+      _hover={{ bg: hoverColor }}
       transition="background-color 100ms"
       color="white"
       height="12"

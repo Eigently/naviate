@@ -1,16 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { chakra, Link, useColorModeValue } from "@chakra-ui/react";
 import { css } from "@emotion/react";
-import { readableColor } from "polished";
 import { FC } from "react";
-import { Link } from "react-router-dom";
-import { light_theme } from "../../theme/colors/light_theme";
 
 export const NotFound: FC = () => {
   const styles = {
-    full_page: css`
+    fullPage: css`
       min-height: 100vh;
-      background-color: ${light_theme.colors.naviate_dark_blue};
-      color: ${readableColor(light_theme.colors.naviate_dark_blue)};
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -21,10 +17,13 @@ export const NotFound: FC = () => {
     `,
   };
 
+  const backgroundColor = useColorModeValue("white", "gray.800");
+  const color = useColorModeValue("black", "white");
+
   return (
-    <div css={[styles.full_page]}>
+    <chakra.div css={[styles.fullPage]} bg={backgroundColor} color={color}>
       <div css={[styles.heading]}>404. Oops.</div>
-      <Link to="/">Click here to go home.</Link>
-    </div>
+      <Link href="/">Click here to go home.</Link>
+    </chakra.div>
   );
 };
