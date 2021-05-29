@@ -27,7 +27,6 @@ export const E6BIllustration: FC<IllustrationProps> = ({ correctionData }) => {
   const courseColor = useColorModeValue("red.600", "red.300");
   const headingColor = useColorModeValue("blue.600", "blue.300");
   const faintColor = useColorModeValue("gray.50", "gray.700");
-  const circleBackgroundColor = useColorModeValue("white", "gray.800");
 
   const normalizeLength = (length: number) =>
     (length / Math.max(windSpeed, trueAirspeed, groundSpeed, 1)) * 20;

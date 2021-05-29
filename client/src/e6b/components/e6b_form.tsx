@@ -23,10 +23,7 @@ type FormProps = {
   ) => void;
 };
 
-export const E6BForm: FC<FormProps> = ({
-  handleFormInput: handleFormInput,
-  correctionData: correctionData,
-}) => {
+export const E6BForm: FC<FormProps> = ({ handleFormInput, correctionData }) => {
   const formik = useFormik({
     initialValues: {
       course: correctionData.course,
