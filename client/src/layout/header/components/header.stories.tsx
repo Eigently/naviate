@@ -14,9 +14,3 @@ const Template: Story<ComponentProps<typeof Header>> = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {};
-
-/**
- * The thing can also be dark...
- */
-export const Dark = Template.bind({});
-Dark.args = {};
