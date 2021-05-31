@@ -37,6 +37,23 @@ export const App = ({ Component, pageProps }) => {
         <meta name="msapplication-TileColor" content="#3a0ca3" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="theme-color" content="#3a0ca3" />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-EWMF2FBFHZ"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+      
+            gtag("config", "G-EWMF2FBFHZ");
+            `,
+          }}
+        />
         <title>Naviate</title>
       </Head>
       <ChakraProvider theme={theme}>
