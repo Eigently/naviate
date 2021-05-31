@@ -48,7 +48,7 @@ Idle.args = {
 export const Separated = Template.bind({});
 Separated.args = {
   dAtisData: {
-    status: "idle",
+    status: "succeeded",
     data: {
       icaoCode: "KATL",
       dAtisType: "SEPARATED",
