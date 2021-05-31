@@ -9,7 +9,7 @@ import { Footer } from "../components/footer";
 
 export const FooterContainer: FC = () => {
   const dispatch = useAppDispatch();
-  const clientVersionString = process.env.REACT_APP_GIT_SHA || "development";
+  const clientVersionString = process.env.NEXT_PUBLIC_GIT_SHA || "development";
 
   const serverVersion = useAppSelector(selectServerVersion);
   const currentDate = Date.now();
