@@ -49,7 +49,7 @@ export const ThemeToggleButton: FC = () => {
 
   const { colorMode, toggleColorMode } = useColorMode();
   const backgroundColor = useColorModeValue("white", "gray.800");
-  const knobColor = useColorModeValue("purple.600", "purple.400");
+  const knobColor = useColorModeValue("purple.700", "purple.500");
 
   return (
     <chakra.button

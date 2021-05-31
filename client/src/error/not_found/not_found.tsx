@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { chakra, Link, useColorModeValue } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { FC } from "react";

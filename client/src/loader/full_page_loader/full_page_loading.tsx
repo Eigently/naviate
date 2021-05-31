@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { chakra } from "@chakra-ui/react";
 import { css, keyframes } from "@emotion/react";

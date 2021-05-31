@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { FC } from "react";
 import * as Yup from "yup";
 import {

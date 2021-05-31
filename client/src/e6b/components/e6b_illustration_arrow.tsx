@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { chakra } from "@chakra-ui/system";
 import { MarkerArrow } from "@visx/marker";
 import { Line } from "@visx/shape";

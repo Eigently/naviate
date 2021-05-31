@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { FC } from "react";
 
 import { DAtis } from "../components/d_atis";

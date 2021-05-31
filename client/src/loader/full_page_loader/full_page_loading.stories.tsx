@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
