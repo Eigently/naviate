@@ -8,3 +8,4 @@ include:
   - server/gitlab/workflows/docker.yml
   - server/gitlab/workflows/build.yml
   - server/gitlab/workflows/test.yml
+  - server/gitlab/workflows/deploy.yml

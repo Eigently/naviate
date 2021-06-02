@@ -27,14 +27,34 @@ build glibc binary:
   needs:
     - unit test
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
-      changes:
-        - server/**/*
-        - .gitlab-ci.yml
-      when: on_success
-  script:
+  - when: never
+  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
+    changes:
+      - server/**/*
+      - .gitlab-ci.yml
+    when: on_success
+  before_script:
     - cd server
+  script:
     - cargo build --release
   artifacts:
     paths:
       - server/target/
+
+build api documentation:
+  image: node:latest
+  stage: build
+  rules:
+  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
+    changes:
+      - server/**/*
+      - .gitlab-ci.yml
+    when: on_success
+  before_script:
+    - cd server
+    - mkdir output
+  script:
+    - npx redoc-cli bundle ./docs/core.yaml -o ./output/index.html
+  artifacts:
+    paths:
+      - server/output/

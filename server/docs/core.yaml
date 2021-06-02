@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Naviate API
+  version: '1.0'
+  contact:
+    name: Eigently
+servers:
+  - url: 'https://api.naviate.xyz'
+    description: Production Server
+  - url: 'http://localhost:8080'
+    description: Local Development Server
+paths:
+  /version:
+    get:
+      summary: Server Version
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: string
+              examples:
+                Example:
+                  value: 2c388e068da81e1085982a99212371379aca0a5d
+      operationId: get-version
+      description: Gets the SHA of the commit that the server is running.
+  '/d_atis/{icao_code}':
+    get:
+      summary: Get D-ATIS
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  airport:
+                    type: string
+                    minLength: 4
+                    maxLength: 4
+                  d_atis_type:
+                    type: string
+                    enum:
+                      - COMBINED
+                      - SEPARATED
+                  d_atis_combined:
+                    type:
+                      - string
+                      - 'null'
+                  d_atis_departure:
+                    type:
+                      - string
+                      - 'null'
+                  d_atis_arrival:
+                    type:
+                      - string
+                      - 'null'
+                required:
+                  - airport
+                  - d_atis_type
+              examples:
+                Combined:
+                  value:
+                    airport: KJFK
+                    d_atis_type: COMBINED
+                    d_atis_combined: 'JFK ATIS INFO U 0651Z. 20006KT 10SM BKN230 14/12 A3024 (THREE ZERO TWO FOUR). APPROACH IN USE ILS RY 31R, VISUAL APCH RY 31L. DEPG RY 31L INT KE 10900 FT AVBL. NOTAMS... RWY 4L, 22R CLSD, SE 3263 FEET RY 31L/13R CLSD. JFK VOR OTS. FDC NOTAMS NATIONALLY UNAVAILABLE UFN. BIRD ACTIVITY VICINITY ARPT. NUM CRANES OPERATING AT JFK. READBACK ALL RWY HOLD SHORT INSTRUCTIONS. ...ADVS YOU HAVE INFO U.'
+                    d_atis_departure: null
+                    d_atis_arrival: null
+                Separated:
+                  value:
+                    airport: KATL
+                    d_atis_type: SEPARATED
+                    d_atis_combined: null
+                    d_atis_departure: 'ATL ARR INFO K 0652Z. 13006KT 10SM FEW200 BKN250 19/13 A3014 (THREE ZERO ONE FOUR). SIMUL APCHS ARE IN PROGRESS, VISUAL APPROACH RWY 8R, VISUAL APPROACH RWY 10. NOTAMS... RWY 8L CLSD, RWY 9L CLSD, RWY 9R CLSD. TWY M CLSD BTN TWY L AND TWY L3, TWY B11 CLSD, TWY B13 CLSD, TWY B15 CLSD, TWY SJ CLSD, TWY L CLSD BTN APPROACH END OF 9L AND RAMP 1 SOUTH. TWY R CLSD BTN RWY 9R AND TWY R12. TWY A CLSD BTN RWY 8L AND TWY A13. RWY 8R PAPI OTS, RWY 9L PAPI OTS, RWY 9R RVR ROLL OUT UNUSABLE. RWY 27 LEFT ILS CAT 2 UNAVAILABLE. CRANE 260 FEET AGL ABOVE MAIN TERMINAL. CRANE 135 FEET AGL WEST END OF TAXIWAY ECHO. BIRD ACTIVITY VC OF ARPT. OPERATE TRANSPONDER WITH MODE C ON ALL RAMPS, TWYS AND RWYS.. ...ADVS YOU HAVE INFO K.'
+                    d_atis_arrival: 'ATL DEP INFO Y 0652Z. 13006KT 10SM FEW200 BKN250 19/13 A3014 (THREE ZERO ONE FOUR). SIMUL DEPS, DEPG RWYS, 8R, 10. XPECT INTIAL HEADING DEPTG RWY 8R, XPECT INITIAL HEADING DEPTG RWY 10. GROUND CONTROL WILL ASSIGN RUNWAY WITH TAXI INSTRUCTIONS. NOTAMS... RWY 8L CLSD, RWY 9L CLSD, RWY 9R CLSD. TWY M CLSD BTN TWY L AND TWY L3, TWY B11 CLSD, TWY B13 CLSD, TWY B15 CLSD, TWY SJ CLSD, TWY L CLSD BTN APPROACH END OF 9L AND RAMP 1 SOUTH. TWY R CLSD BTN RWY 9R AND TWY R12. TWY A CLSD BTN RWY 8L AND TWY A13. RWY 9R RVR ROLL OUT UNUSABLE. RWY 27 LEFT ILS CAT 2 UNAVAILABLE. CRANE 260 FEET AGL ABOVE MAIN TERMINAL. CRANE 135 FEET AGL WEST END OF TAXIWAY ECHO. BIRD ACTIVITY VC OF ARPT. OPERATE TRANSPONDER WITH MODE C ON ALL RAMPS, TWYS AND RWYS.. ...ADVS YOU HAVE INFO Y.'
+      operationId: get-d_atis
+      description: Gets the D-ATIS for an airport.
+    parameters:
+      - schema:
+          type: string
+        name: icao_code
+        in: path
+        required: true
+        description: ICAO Code of Airport
+components:
+  schemas: {}

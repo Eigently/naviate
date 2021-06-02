@@ -1,0 +1,35 @@
+deploy dockerized musl:
+  image: ubuntu:20.04
+  stage: deploy
+  needs:
+    - build and push dockerized musl
+  dependencies:
+    - build and push dockerized musl
+  rules:
+  - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"' 
+    changes:
+      - server/**/*
+      - .gitlab-ci.yml
+    when: on_success
+  before_script:
+    - cd server
+  script:
+    - ./scripts/deploy_alpine   
+
+deploy api documentation:
+  image: node:latest
+  stage: deploy
+  needs: 
+    - build api documentation
+  dependencies:
+    - build api documentation
+  rules:
+  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
+    changes:
+      - server/**/*
+      - .gitlab-ci.yml
+    when: on_success
+  before_script:
+    - cd server
+  script:
+    - ./scripts/deploy_documentation

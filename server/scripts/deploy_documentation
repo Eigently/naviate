@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+npx @getmeli/cli upload \
+    ./output \
+    --token $MELI_API_DOCUMENTATION_TOKEN \
+    --site $MELI_API_DOCUMENTATION_SITE_ID \
+    --url https://$MELI_SERVER \
+    --branch $CI_COMMIT_BRANCH$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME \
+    --release $CI_COMMIT_SHA
