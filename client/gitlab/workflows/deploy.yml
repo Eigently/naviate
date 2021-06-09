@@ -1,0 +1,17 @@
+deploy client storybook:
+  image: node:latest
+  stage: deploy
+  needs:
+    - build client storybook
+  dependencies:
+    - build client storybook
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - client/**/*
+        - .gitlab-ci.yml
+      when: on_success
+  before_script:
+    - cd client
+  script:
+    - ./scripts/deploy_storybook

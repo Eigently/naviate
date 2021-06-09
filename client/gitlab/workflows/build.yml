@@ -1,0 +1,17 @@
+build client storybook:
+  image: node:latest
+  stage: build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - client/**/*
+        - .gitlab-ci.yml
+      when: on_success
+  before_script:
+    - cd client
+    - ./scripts/install_requirements.sh
+  script:
+    - yarn build-storybook
+  artifacts:
+    paths:
+      - client/storybook-static
