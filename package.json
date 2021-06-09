@@ -1,0 +1,26 @@
+{
+  "name": "naviate",
+  "version": "1.0.0",
+  "description": "The ultimate flight simulation toolkit.",
+  "scripts": {
+    "prepare": "husky install",
+    "test": "echo 'success'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Eigently/naviate.git"
+  },
+  "author": "Eigently",
+  "license": "SEE LICENSE IN ./LICENSE.md",
+  "bugs": {
+    "url": "https://gitlab.com/Eigently/naviate/issues"
+  },
+  "homepage": "https://gitlab.com/Eigently/naviate#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.1"
+  }
+}

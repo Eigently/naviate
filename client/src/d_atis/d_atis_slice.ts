@@ -13,9 +13,9 @@ type GetDAtisPayload = {
 export const getDAtis = createAsyncThunk(
   "d_atis/get",
   async ({ icaoCode }: GetDAtisPayload): Promise<DAtisData> => {
-    const result: any = await fetch(
-      `${API_URL}/d_atis/${icaoCode}`
-    ).then((result) => result.json());
+    const result: any = await fetch(`${API_URL}/d_atis/${icaoCode}`).then(
+      (result) => result.json()
+    );
 
     if (result.error) {
       return {
