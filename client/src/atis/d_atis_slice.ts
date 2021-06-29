@@ -11,7 +11,7 @@ type GetDAtisPayload = {
 };
 
 export const getDAtis = createAsyncThunk(
-  "d_atis/get",
+  "dAtis/get",
   async ({ icaoCode }: GetDAtisPayload): Promise<DAtisData> => {
     const result: any = await fetch(`${API_URL}/d_atis/${icaoCode}`).then(
       (result) => result.json()
@@ -37,8 +37,8 @@ export const getDAtis = createAsyncThunk(
   }
 );
 
-export const e6bSlice = createSlice({
-  name: "e6b",
+export const dAtisSlice = createSlice({
+  name: "dAtis",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -48,8 +48,11 @@ export const e6bSlice = createSlice({
       })
       .addCase(getDAtis.pending, (_state, _action) => {
         return { status: "loading" };
+      })
+      .addCase(getDAtis.rejected, (_state, _action) => {
+        return { status: "failed", error: "Unknown error." };
       });
   },
 });
 
-export const { reducer } = e6bSlice;
+export const { reducer } = dAtisSlice;

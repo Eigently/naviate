@@ -1,18 +1,18 @@
 import { ComponentProps } from "react";
 import { Story } from "@storybook/react";
 
-import { DAtis } from "./d_atis";
+import { Atis } from "./atis";
 
 export default {
-  title: "Aviation/D-ATIS",
-  component: DAtis,
+  title: "Aviation/ATIS",
+  component: Atis,
   argTypes: {
     handleGetDAtis: { action: "handleGetDAtis" },
   },
 };
 
-const Template: Story<ComponentProps<typeof DAtis>> = (args) => (
-  <DAtis {...args} />
+const Template: Story<ComponentProps<typeof Atis>> = (args) => (
+  <Atis {...args} />
 );
 
 export const Primary = Template.bind({});
