@@ -1,4 +1,3 @@
-use actix_cors::Cors;
 use actix_web::get;
 use actix_web::middleware::Logger;
 use actix_web::App;
@@ -7,33 +6,13 @@ use actix_web::HttpServer;
 use actix_web::Responder;
 use env_logger;
 
-mod d_atis;
+mod cors;
+mod routes;
+mod version;
 
 #[get("/health")]
 async fn health() -> impl Responder {
   HttpResponse::Ok().finish()
-}
-
-#[get("/version")]
-async fn version() -> impl Responder {
-  match std::env::var("COMMIT_SHA") {
-    Ok(sha) => HttpResponse::Ok().body(sha),
-    Err(_) => HttpResponse::Ok().body("development"),
-  }
-}
-
-fn get_cors() -> Cors {
-  match std::env::var("RUST_ENV") {
-    Ok(x) => match x.as_str() {
-      "development" | "dev" => Cors::default()
-        .allow_any_origin()
-        .allow_any_header()
-        .allow_any_method(),
-      "production" => Cors::default().allowed_origin("https://www.naviate.xyz"),
-      _ => Cors::default(),
-    },
-    _ => Cors::default(),
-  }
 }
 
 #[actix_web::main]
@@ -42,11 +21,13 @@ async fn main() -> std::io::Result<()> {
 
   HttpServer::new(|| {
     App::new()
+      .wrap(cors::get_cors())
       .wrap(Logger::default())
-      .wrap(get_cors())
       .service(health)
-      .service(version)
-      .configure(d_atis::routes::config)
+      .service(version::version)
+      .configure(routes::d_atis::config)
+      .configure(routes::metar::config)
+      .configure(routes::taf::config)
   })
   .bind("0.0.0.0:8080")?
   .run()

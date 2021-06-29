@@ -7,7 +7,7 @@ use actix_web::ResponseError;
 use serde::Serialize;
 use thiserror::Error;
 
-use naviate_d_atis;
+use naviate_avwx;
 
 #[derive(Serialize)]
 struct ErrorResponse {
@@ -17,55 +17,48 @@ struct ErrorResponse {
 }
 
 #[derive(Error, Debug)]
-enum HandleDatisError {
+enum HandleMetarError {
   #[error("Internal Server Error.")]
   InternalServerError,
-  #[error("Invalid or Unsupported ICAO Code.")]
-  InvalidICAOCode,
+  #[error("Invalid or Unsupported Station.")]
+  InvalidStation,
 }
 
-impl HandleDatisError {
-  pub fn name(&self) -> String {
-    match self {
-      Self::InvalidICAOCode => "InvalidICAOCode".to_string(),
-      Self::InternalServerError => "InternalServerError".to_string(),
-    }
-  }
-}
-
-impl ResponseError for HandleDatisError {
+impl HandleMetarError {
   fn status_code(&self) -> StatusCode {
     match *self {
       Self::InternalServerError => StatusCode::INTERNAL_SERVER_ERROR,
-      Self::InvalidICAOCode => StatusCode::BAD_REQUEST,
+      Self::InvalidStation => StatusCode::BAD_REQUEST,
     }
   }
+}
 
+impl ResponseError for HandleMetarError {
   fn error_response(&self) -> HttpResponse {
     let status_code = self.status_code();
     let error_response = ErrorResponse {
       code: status_code.as_u16(),
+      error: format!("{:?}", self),
       message: self.to_string(),
-      error: self.name(),
     };
     HttpResponse::build(status_code).json(error_response)
   }
 }
 
-#[get("/d_atis/{icao_code}")]
-async fn handle_datis(Path(icao_code): Path<String>) -> Result<HttpResponse, HandleDatisError> {
-  let response = naviate_d_atis::get_d_atis(&icao_code).await;
+#[get("/avwx/metar/{station}")]
+async fn handle_metar(path: Path<String>) -> Result<HttpResponse, HandleMetarError> {
+  let station = path.into_inner();
+  let response = naviate_avwx::get_metar(&station).await;
 
   match response {
     Err(e) => match e {
-      naviate_d_atis::GetDAtisError::DAtisAPIError
-      | naviate_d_atis::GetDAtisError::UnknownError => Err(HandleDatisError::InternalServerError),
-      naviate_d_atis::GetDAtisError::InvalidICAOCode => Err(HandleDatisError::InvalidICAOCode),
+      naviate_avwx::GetMetarError::UnknownError => Err(HandleMetarError::InternalServerError),
+      naviate_avwx::GetMetarError::InvalidStation => Err(HandleMetarError::InvalidStation),
     },
     Ok(r) => Ok(HttpResponse::Ok().json(r)),
   }
 }
 
 pub fn config(cfg: &mut ServiceConfig) {
-  cfg.service(handle_datis);
+  cfg.service(handle_metar);
 }
