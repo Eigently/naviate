@@ -1,7 +1,7 @@
 import { join } from "path";
 import AutoLoad, { AutoloadPluginOptions } from "fastify-autoload";
 import { FastifyPluginAsync } from "fastify";
-import "reflect-metadata";
+import createDbConnection from "./db_connection";
 
 export type AppOptions = {
   // Place your custom options for app below here.
@@ -11,7 +11,11 @@ const app: FastifyPluginAsync<AppOptions> = async (
   fastify,
   opts
 ): Promise<void> => {
-  // Place here your custom code!
+  // Initialize DB connection through TypeORM and share with fastify.
+  const dbConnection = await createDbConnection();
+  fastify.decorate("dbConnection", dbConnection);
+
+  // Start the PubSub layer
 
   // Do not touch the following lines
 
