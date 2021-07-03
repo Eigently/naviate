@@ -9,7 +9,7 @@ client - build storybook:
       when: on_success
   before_script:
     - cd client
-    - ./scripts/install_requirements.sh
+    - ./scripts/install_requirements
   script:
     - yarn build-storybook
   artifacts:
