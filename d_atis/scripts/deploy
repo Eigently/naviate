@@ -11,6 +11,5 @@ chmod 700 ~/.ssh
 ssh-keyscan -t rsa $API_SERVER >> ~/.ssh/known_hosts
 
 # Deploy docker image
-rsync -Pavz d_atis.dockerimage root@$API_SERVER:~/
-ssh root@$API_SERVER "cat d_atis.dockerimage | docker load; rm d_atis.dockerimage"
+cat d_atis.dockerimage | bzip2 | ssh root@$API_SERVER "bunzip2 | docker load"
 ssh root@$API_SERVER "dokku tags:create naviate-scds-d-atis-pubsub previous; dokku tags:deploy naviate-scds-d-atis-pubsub latest"
