@@ -1,10 +1,10 @@
-build musl binary:
+server - build musl:
   image: rust:latest
   stage: build
   tags:
     - rust-build
   needs:
-    - unit test
+    - server - unit test
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
@@ -21,18 +21,18 @@ build musl binary:
     paths:
       - server/target/
 
-build glibc binary:
+server - build glibc:
   image: rust:latest
   stage: build
   needs:
-    - unit test
+    - server - unit test
   rules:
-  - when: never
-  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
-    changes:
-      - server/**/*
-      - .gitlab-ci.yml
-    when: on_success
+    - when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - server/**/*
+        - .gitlab-ci.yml
+      when: on_success
   before_script:
     - cd server
   script:
@@ -41,15 +41,15 @@ build glibc binary:
     paths:
       - server/target/
 
-build api documentation:
+server - build api documentation:
   image: node:latest
   stage: build
   rules:
-  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
-    changes:
-      - server/**/*
-      - .gitlab-ci.yml
-    when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - server/**/*
+        - .gitlab-ci.yml
+      when: on_success
   before_script:
     - cd server
     - mkdir output

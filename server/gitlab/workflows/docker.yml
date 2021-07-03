@@ -1,16 +1,16 @@
-build and push dockerized musl:
+server - dockerize and share:
   image: docker:19.03.12
   stage: share
   needs:
-    - build musl binary
+    - server - build musl
   dependencies:
-    - build musl binary
+    - server - build musl
   rules:
-  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")' 
-    changes:
-      - server/**/*
-      - .gitlab-ci.yml
-    when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - server/**/*
+        - .gitlab-ci.yml
+      when: on_success
   artifacts:
     paths:
       - server/naviate.dockerimage

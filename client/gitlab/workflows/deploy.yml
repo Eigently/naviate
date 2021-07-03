@@ -1,10 +1,10 @@
-deploy client storybook:
+client - deploy storybook:
   image: node:latest
   stage: deploy
   needs:
-    - build client storybook
+    - client - build storybook
   dependencies:
-    - build client storybook
+    - client - build storybook
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
       changes:

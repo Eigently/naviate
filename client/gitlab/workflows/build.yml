@@ -1,4 +1,4 @@
-build client storybook:
+client - build storybook:
   image: node:latest
   stage: build
   rules:

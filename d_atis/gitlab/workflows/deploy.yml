@@ -1,10 +1,10 @@
-SCDS D-ATIS PubSub - Deploy Docker Container:
+d_atis - deploy dockerized:
   image: ubuntu:20.04
   stage: deploy
   needs:
-    - SCDS D-ATIS PubSub - Build Dockerized Node App
+    - d_atis - dockerize and share
   dependencies:
-    - SCDS D-ATIS PubSub - Build Dockerized Node App
+    - d_atis - dockerize and share
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
       changes:

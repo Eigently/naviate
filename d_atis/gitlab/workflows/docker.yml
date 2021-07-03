@@ -1,4 +1,4 @@
-SCDS D-ATIS PubSub - Build Dockerized Node App:
+d_atis - dockerize and share:
   image: docker:19.03.12
   stage: share
   rules:
