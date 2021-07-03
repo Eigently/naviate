@@ -3,5 +3,5 @@
 docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 docker build -t $CI_REGISTRY_IMAGE/d_atis/alpine:$CI_COMMIT_SHORT_SHA .
 docker push $CI_REGISTRY_IMAGE/d_atis/alpine:$CI_COMMIT_SHORT_SHA
-docker image tag $CI_REGISTRY_IMAGE/d_atis/alpine:$CI_COMMIT_SHORT_SHA dokku/naviate-scds-d-atis-pubsub:latest
-docker save dokku/naviate-scds-d-atis-pubsub:latest -o d_atis.dockerimage
+docker image tag $CI_REGISTRY_IMAGE/d_atis/alpine:$CI_COMMIT_SHORT_SHA dokku/naviate-d-atis:latest
+docker save dokku/naviate-d-atis:latest -o d_atis.dockerimage

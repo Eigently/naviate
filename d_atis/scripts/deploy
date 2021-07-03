@@ -12,4 +12,4 @@ ssh-keyscan -t rsa $API_SERVER >> ~/.ssh/known_hosts
 
 # Deploy docker image
 cat d_atis.dockerimage | bzip2 | ssh root@$API_SERVER "bunzip2 | docker load"
-ssh root@$API_SERVER "dokku tags:create naviate-scds-d-atis-pubsub previous; dokku tags:deploy naviate-scds-d-atis-pubsub latest"
+ssh root@$API_SERVER "dokku tags:create naviate-d-atis previous; dokku tags:deploy naviate-d-atis latest"
