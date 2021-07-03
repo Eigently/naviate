@@ -860,6 +860,7 @@ dependencies = [
 name = "naviate-d-atis"
 version = "0.1.0"
 dependencies = [
+ "log",
  "reqwest",
  "serde",
  "serde_json",

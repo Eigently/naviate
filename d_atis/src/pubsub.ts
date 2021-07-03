@@ -6,7 +6,7 @@ import {
   ReceiverEvents,
 } from "rhea-promise";
 import { parse } from "fast-xml-parser";
-import { DAtis, DAtisType } from "./entity/DAtis";
+import { DAtisType, saveDAtis } from "./service/d_atis";
 
 export const startPubSub = async (): Promise<void> => {
   const connectionOptions: ConnectionOptions = {
@@ -17,6 +17,7 @@ export const startPubSub = async (): Promise<void> => {
     port: parseInt(process.env.AMQP_PORT || "5671"),
     reconnect: true,
   };
+
   const connection = new Connection(connectionOptions);
   await connection.open();
 
@@ -30,37 +31,22 @@ export const startPubSub = async (): Promise<void> => {
   });
   receiver.on(ReceiverEvents.receiverError, (context: EventContext) => {
     const receiverError = context.receiver && context.receiver.error;
-    if (receiverError) {
-      console.log("error: ", receiverError);
-    }
+    if (receiverError) console.log("error: ", receiverError);
   });
 };
 
-const handleMessage = async (message: string) => {
-  const messageObjectFull = parse(message);
+const handleMessage = async (messageXmlString: string) => {
+  const messageObjectFull = parse(messageXmlString);
   const messageObject = messageObjectFull[Object.keys(messageObjectFull)[0]];
-  const icaoCode = messageObject.airportID.trim();
+
+  const airport = messageObject.airportID.trim();
   const body = messageObject.dataBody.slice(1).trim();
+
   let type = DAtisType.COMBINED;
-  if (body.includes("DEP INFO") && !body.includes("ARR/DEP INFO")) {
+  if (body.includes("DEP INFO") && !body.includes("ARR/DEP INFO"))
     type = DAtisType.DEPARTURE;
-  }
-  if (body.includes("ARR INFO") && !body.includes("DEP/ARR INFO")) {
+  if (body.includes("ARR INFO") && !body.includes("DEP/ARR INFO"))
     type = DAtisType.ARRIVAL;
-  }
 
-  // console.log(`${icaoCode} [${type}]: ${body}`);
-  const previousDAtis = await DAtis.findOne({ icaoCode, type });
-  if (previousDAtis && previousDAtis.body === body) return;
-
-  const dAtis = new DAtis();
-  dAtis.icaoCode = icaoCode;
-  dAtis.timestamp = new Date();
-  dAtis.type = type;
-  dAtis.body = body;
-  await dAtis.save();
-
-  if (previousDAtis) {
-    await previousDAtis.remove();
-  }
+  await saveDAtis({ airport, type, body });
 };

@@ -7,7 +7,7 @@ use actix_web::ResponseError;
 use serde::Serialize;
 use thiserror::Error;
 
-use naviate_d_atis;
+use naviate_d_atis::{self, GetDAtisError};
 
 #[derive(Serialize)]
 struct ErrorResponse {
@@ -52,9 +52,10 @@ async fn handle_datis(path: Path<String>) -> Result<HttpResponse, HandleDatisErr
 
   match response {
     Err(e) => match e {
-      naviate_d_atis::GetDAtisError::DAtisAPIError
-      | naviate_d_atis::GetDAtisError::UnknownError => Err(HandleDatisError::InternalServerError),
-      naviate_d_atis::GetDAtisError::InvalidICAOCode => Err(HandleDatisError::InvalidICAOCode),
+      GetDAtisError::OnlyArrival(_)
+      | GetDAtisError::OnlyDeparture(_)
+      | GetDAtisError::UnknownError => Err(HandleDatisError::InternalServerError),
+      GetDAtisError::NoEntry(_) => Err(HandleDatisError::InvalidICAOCode),
     },
     Ok(r) => Ok(HttpResponse::Ok().json(r)),
   }

@@ -23,10 +23,12 @@
     "fastify-cli": "^2.13.0",
     "fastify-plugin": "^3.0.0",
     "fastify-sensible": "^3.1.0",
+    "http-status-codes": "^2.1.4",
     "moment": "^2.29.1",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.10",
     "rhea-promise": "^2.1.0",
+    "ts-results": "^3.3.0",
     "typeorm": "0.2.34",
     "typeorm-naming-strategies": "^2.0.0"
   },

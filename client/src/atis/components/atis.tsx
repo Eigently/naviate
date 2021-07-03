@@ -17,14 +17,14 @@ import {
 } from "@chakra-ui/react";
 
 import { useFormik } from "formik";
-import { DAtisData, MetarData, TafData } from "../interface";
+import { DAtisState, MetarState, TafState } from "../interface";
 
 type AtisProps = {
-  dAtisData: DAtisData;
+  dAtisData: DAtisState;
   handleGetDAtis: (icaoCode: string) => void;
-  metarData: MetarData;
+  metarData: MetarState;
   handleGetMetar: (station: string) => void;
-  tafData: TafData;
+  tafData: TafState;
   handleGetTaf: (station: string) => void;
 };
 
@@ -75,17 +75,21 @@ export const Atis: FC<AtisProps> = ({
             {dAtisData.error}
           </Text>
         )}
-        {dAtisData.status === "succeeded" &&
-          (dAtisData.data.dAtisType === "COMBINED" ? (
-            <Text fontFamily="monospace">{dAtisData.data?.dAtisCombined}</Text>
-          ) : (
-            <>
-              <Text fontFamily="monospace">{dAtisData.data?.dAtisArrival}</Text>
+        {dAtisData.status === "succeeded" && (
+          <>
+            {"combined" in dAtisData.data.data && (
+              <Text fontFamily="monospace">{dAtisData.data.data.combined}</Text>
+            )}
+            {"arrival" in dAtisData.data.data && (
+              <Text fontFamily="monospace">{dAtisData.data.data.arrival}</Text>
+            )}
+            {"departure" in dAtisData.data.data && (
               <Text fontFamily="monospace">
-                {dAtisData.data?.dAtisDeparture}
+                {dAtisData.data.data.departure}
               </Text>
-            </>
-          ))}
+            )}
+          </>
+        )}
       </Stack>
     ),
   };

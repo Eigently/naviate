@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DAtisData } from "./interface";
+import { DAtisState } from "./interface";
 import { API_URL } from "../constants/api";
 
-export const initialState: DAtisData = {
+export const initialState: DAtisState = {
   status: "idle",
 };
 
@@ -12,7 +12,7 @@ type GetDAtisPayload = {
 
 export const getDAtis = createAsyncThunk(
   "dAtis/get",
-  async ({ icaoCode }: GetDAtisPayload): Promise<DAtisData> => {
+  async ({ icaoCode }: GetDAtisPayload): Promise<DAtisState> => {
     const result: any = await fetch(`${API_URL}/d_atis/${icaoCode}`).then(
       (result) => result.json()
     );
@@ -27,11 +27,8 @@ export const getDAtis = createAsyncThunk(
     return {
       status: "succeeded",
       data: {
-        icaoCode: result.airport,
-        dAtisType: result.d_atis_type,
-        dAtisCombined: result.d_atis_combined,
-        dAtisDeparture: result.d_atis_departure,
-        dAtisArrival: result.d_atis_arrival,
+        airport: result.airport,
+        data: result.data,
       },
     };
   }

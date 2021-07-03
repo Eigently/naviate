@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TafData } from "./interface";
+import { TafState } from "./interface";
 import { API_URL } from "../constants/api";
 
-export const initialState: TafData = {
+export const initialState: TafState = {
   status: "idle",
 };
 
@@ -12,7 +12,7 @@ type GetTafPayload = {
 
 export const getTaf = createAsyncThunk(
   "taf/get",
-  async ({ station }: GetTafPayload): Promise<TafData> => {
+  async ({ station }: GetTafPayload): Promise<TafState> => {
     const result: any = await fetch(`${API_URL}/avwx/taf/${station}`).then(
       (result) => result.json()
     );

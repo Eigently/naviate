@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { MetarData } from "./interface";
+import { MetarState } from "./interface";
 import { API_URL } from "../constants/api";
 
-export const initialState: MetarData = {
+export const initialState: MetarState = {
   status: "idle",
 };
 
@@ -12,7 +12,7 @@ type GetMetarPayload = {
 
 export const getMetar = createAsyncThunk(
   "metar/get",
-  async ({ station }: GetMetarPayload): Promise<MetarData> => {
+  async ({ station }: GetMetarPayload): Promise<MetarState> => {
     const result: any = await fetch(`${API_URL}/avwx/metar/${station}`).then(
       (result) => result.json()
     );
