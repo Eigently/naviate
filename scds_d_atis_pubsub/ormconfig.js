@@ -1,4 +1,5 @@
 const { join } = require("path");
+const { SnakeNamingStrategy } = require("typeorm-naming-strategies");
 
 module.exports = {
   type: "postgres",
@@ -7,7 +8,7 @@ module.exports = {
   username: "postgres",
   password: "password",
   database: "scds_d_atis_pubsub",
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [join(__dirname, "{,dist}", "entity", "**", "*.{ts,js}")],
   migrations: [join(__dirname, "{,dist}", "migration", "**", "*.{ts,js}")],
@@ -17,4 +18,5 @@ module.exports = {
     migrationsDir: "src/migration",
     subscribersDir: "src/subscriber",
   },
+  namingStrategy: new SnakeNamingStrategy(),
 };
