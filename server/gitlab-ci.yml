@@ -1,9 +1,3 @@
-stages:
-  - test
-  - build
-  - share
-  - deploy
-
 include:
   - server/gitlab/workflows/docker.yml
   - server/gitlab/workflows/build.yml

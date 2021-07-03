@@ -2,12 +2,12 @@ const { join } = require("path");
 const { SnakeNamingStrategy } = require("typeorm-naming-strategies");
 
 module.exports = {
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "password",
-  database: "scds_d_atis_pubsub",
+  type: process.env.DB_TYPE || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432"),
+  username: process.env.DB_USERNAME || "postgres",
+  password: process.env.DB_PASSWORD || "password",
+  database: process.env.DB_DB || "d_atis",
   synchronize: false,
   logging: false,
   entities: [join(__dirname, "{,dist}", "entity", "**", "*.{ts,js}")],

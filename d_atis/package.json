@@ -1,5 +1,5 @@
 {
-  "name": "scds_d_atis_pubsub",
+  "name": "d_atis",
   "version": "1.0.0",
   "description": "",
   "main": "app.ts",

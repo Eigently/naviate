@@ -1,3 +1,10 @@
+stages:
+  - test
+  - build
+  - share
+  - deploy
+
 include:
   - local: "/server/gitlab-ci.yml"
   - local: "/client/gitlab-ci.yml"
+  - local: "/d_atis/gitlab-ci.yml"

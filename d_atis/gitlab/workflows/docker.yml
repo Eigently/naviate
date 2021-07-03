@@ -1,0 +1,20 @@
+SCDS D-ATIS PubSub - Build Dockerized Node App:
+  image: docker:19.03.12
+  stage: share
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main")'
+      changes:
+        - d_atis/**/*
+        - .gitlab-ci.yml
+      when: on_success
+  artifacts:
+    paths:
+      - d_atis/d_atis.dockerimage
+  tags:
+    - docker
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - cd d_atis
+  script:
+    - ./scripts/dockerize

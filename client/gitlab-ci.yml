@@ -1,9 +1,3 @@
-stages:
-  - test
-  - build
-  - share
-  - deploy
-
 include:
   - client/gitlab/workflows/build.yml
   - client/gitlab/workflows/deploy.yml

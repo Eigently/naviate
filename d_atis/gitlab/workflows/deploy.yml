@@ -1,0 +1,17 @@
+SCDS D-ATIS PubSub - Deploy Docker Container:
+  image: ubuntu:20.04
+  stage: deploy
+  needs:
+    - SCDS D-ATIS PubSub - Build Dockerized Node App
+  dependencies:
+    - SCDS D-ATIS PubSub - Build Dockerized Node App
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - d_atis/**/*
+        - .gitlab-ci.yml
+      when: on_success
+  before_script:
+    - cd d_atis
+  script:
+    - ./scripts/deploy

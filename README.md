@@ -12,8 +12,8 @@ It is important that any derivative works of this project release their source c
 
 ## Project Structure
 
-| Directory            | Description                                                                                   |
-| -------------------- | --------------------------------------------------------------------------------------------- |
-| `client`             | Web frontend client (i.e. [https://www.naviate.xyz](https://www.naviate.xyz))                 |
-| `server`             | Core server that frontend client queries                                                      |
-| `scds_d_atis_pubsub` | Microservice that subscribes to the SCDS PubSub for D-ATIS Data and persists to a Postgres DB |
+| Directory | Description                                                                   |
+| --------- | ----------------------------------------------------------------------------- |
+| `client`  | Web frontend client (i.e. [https://www.naviate.xyz](https://www.naviate.xyz)) |
+| `server`  | Core server that frontend client queries                                      |
+| `d_atis`  | Microservice for accessing D-ATIS Data from the FAA                           |

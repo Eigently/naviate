@@ -1,0 +1,3 @@
+include:
+  - d_atis/gitlab/workflows/docker.yml
+  - d_atis/gitlab/workflows/deploy.yml
